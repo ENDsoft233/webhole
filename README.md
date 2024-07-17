@@ -1,4 +1,4 @@
-网页版 T大树洞：[https://thuhole.com/](https://thuhole.com/)
+网页版 T大鼠洞：[https://thuhole.com/](https://thuhole.com/)
 
 ![https://api.travis-ci.org/thuhole/webhole.svg?branch=master](https://api.travis-ci.org/thuhole/webhole.svg?branch=master)
 
@@ -25,7 +25,7 @@ REACT_APP_BUILD_INFO=$VERSION_NUMBER npm run build
 
 ## 浏览器兼容
 
-下表为当前 T大树洞 网页版的浏览器兼容目标：
+下表为当前 T大鼠洞 网页版的浏览器兼容目标：
 
 | 平台     | Desktop |                            |         | Windows  |      | macOS  | iOS    |                     | Android |                         |
 | -------- | ------- | -------------------------- | ------- | -------- | ---- | ------ | ------ | ------------------- | ------- | ----------------------- |
@@ -45,13 +45,13 @@ REACT_APP_BUILD_INFO=$VERSION_NUMBER npm run build
 
 ## 问题反馈
 
-对 T大树洞 网页版的 bug 反馈请在相应仓库提交 Issue。
+对 T大鼠洞 网页版的 bug 反馈请在相应仓库提交 Issue。
 
 欢迎提出功能和 UI 建议，但可能不会被采纳。根据 GPL，你有权自行实现你的想法。
 
 不方便在 GitHub 上说明的问题可以邮件 contact@thuhole.com。邮件内容可能会被公开。
 
-对 T大树洞 后端服务、账号、树洞内容的反馈请联系邮件 contact@thuhole.com。
+对 T大鼠洞 后端服务、账号、鼠洞内容的反馈请联系邮件 contact@thuhole.com。
 
 ## branch说明：
 - master branch: 主分支

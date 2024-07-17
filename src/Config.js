@@ -402,7 +402,7 @@ export class ConfigUI extends PureComponent {
             id="block_words"
             callback={this.save_changes_bound}
             name="设置屏蔽词"
-            description={'包含屏蔽词的树洞会被折叠，每行写一个屏蔽词'}
+            description={'包含屏蔽词的鼠洞会被折叠，每行写一个屏蔽词'}
             display={(array) => array.join('\n')}
             sift={(array) => array.filter((v) => v)}
             parse={(string) => string.split('\n')}
@@ -412,7 +412,7 @@ export class ConfigUI extends PureComponent {
             callback={this.save_changes_bound}
             id="pressure"
             name="快速返回"
-            description="短暂按住 Esc 键或重压屏幕（3D Touch）可以快速返回或者刷新树洞"
+            description="短暂按住 Esc 键或重压屏幕（3D Touch）可以快速返回或者刷新鼠洞"
           />
           <hr />
           <ConfigSwitch
@@ -425,8 +425,8 @@ export class ConfigUI extends PureComponent {
           <ConfigSwitch
             callback={this.save_changes_bound}
             id="fold"
-            name="折叠树洞"
-            description="在时间线中折叠可能引起不适的树洞"
+            name="折叠鼠洞"
+            description="在时间线中折叠可能引起不适的鼠洞"
           />
           {localStorage['hide_announcement'] && (
             <div>

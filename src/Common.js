@@ -321,6 +321,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
 });
 
 export function PromotionBar() {
+  return null;
   let is_ios = /iPhone|iPad|iPod/i.test(window.navigator.userAgent);
   let is_installed =
     window.matchMedia('(display-mode: standalone)').matches ||
@@ -333,7 +334,7 @@ export function PromotionBar() {
     return !navigator.standalone ? (
       <div className="box promotion-bar">
         <span className="icon icon-about" />
-        &nbsp; 用 Safari 把树洞 <b>添加到主屏幕</b> 更好用
+        &nbsp; 用 Safari 把鼠洞 <b>添加到主屏幕</b> 更好用
       </div>
     ) : null;
   // noinspection JSConstructorReturnsPrimitive
@@ -341,7 +342,7 @@ export function PromotionBar() {
     return pwa_prompt_event ? (
       <div className="box promotion-bar">
         <span className="icon icon-about" />
-        &nbsp; 把网页版树洞{' '}
+        &nbsp; 把网页版鼠洞{' '}
         <b>
           <a
             onClick={() => {
@@ -357,6 +358,7 @@ export function PromotionBar() {
 }
 
 export function BrowserWarningBar() {
+  return null;
   let cr_version = /Chrome\/(\d+)/.exec(navigator.userAgent);
   cr_version = cr_version ? cr_version[1] : 0;
   if (/MicroMessenger\/|QQ\//.test(navigator.userAgent))

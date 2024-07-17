@@ -76,7 +76,7 @@ export function GlobalTitle(props) {
 // const FALLBACK_APPS = {
 //   // id, text, url, icon_normal, icon_hover, new_tab
 //   bar: [
-//     ['hole', '树洞', '/hole', appicon_hole, null, false],
+//     ['hole', '鼠洞', '/hole', appicon_hole, null, false],
 //     [
 //       'imasugu',
 //       '教室',

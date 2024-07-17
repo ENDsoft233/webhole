@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import './login.css';
 
-import { API_ROOT } from './old_infrastructure/const';
+import { SECURITY_ROOT } from './old_infrastructure/const';
 import { get_json, API_VERSION_PARAM } from './old_infrastructure/functions';
 import { RecaptchaV2Popup } from './login.js';
 
@@ -214,12 +214,12 @@ class UnregisterPopupSelf extends Component {
                   </label>
                 </p>
                 <p>
-                  注：Nonce是注册树洞时欢迎邮件中的“找回密码口令”，形如xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx。
+                  注：Nonce是注册鼠洞时欢迎邮件中的“找回密码口令”，形如xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx。
                 </p>
                 <p>
                   <label>
                     <input type="checkbox" ref={this.ref.checkbox_account} />
-                    我已经了解了注销账户后，原账户的发帖、评论将保留；注销账户后可以重新注册树洞，但原账户的关注列表、评论区昵称等关联数据将丢失。
+                    我已经了解了注销账户后，原账户的发帖、评论将保留；注销账户后可以重新注册鼠洞，但原账户的关注列表、评论区昵称等关联数据将丢失。
                   </label>
                 </p>
               </>

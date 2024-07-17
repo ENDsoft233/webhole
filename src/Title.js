@@ -137,7 +137,7 @@ class ControlBar extends PureComponent {
               value={this.state.search_text}
               placeholder={`${
                 this.props.mode === 'attention' ? '在关注列表中' : ''
-              }搜索 或 #树洞号`}
+              }搜索 或 #洞号`}
               onChange={this.on_change_bound}
               onKeyPress={this.on_keypress_bound}
             />
@@ -160,7 +160,7 @@ class ControlBar extends PureComponent {
                 className="no-underline control-btn"
                 onClick={() => {
                   this.props.show_sidebar(
-                    '发表树洞',
+                    '发表鼠洞',
                     <PostForm
                       token={token}
                       action={'dopost'}
@@ -189,20 +189,6 @@ export function Title(props) {
     <div className="title-bar">
       {/* <AppSwitcher appid="hole" /> */}
       <div className="aux-margin">
-        <div className="title">
-          <p className="centered-line">
-            <span
-              onClick={() =>
-                props.show_sidebar(
-                  process.env.REACT_APP_TITLE,
-                  <InfoSidebar show_sidebar={props.show_sidebar} />,
-                )
-              }
-            >
-              {process.env.REACT_APP_TITLE}
-            </span>
-          </p>
-        </div>
         <ControlBar
           show_sidebar={props.show_sidebar}
           set_mode={props.set_mode}

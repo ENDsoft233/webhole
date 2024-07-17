@@ -18,6 +18,7 @@ import {
   // API,
   get_json,
   API_ROOT,
+  SECURITY_ROOT,
   API_VERSION_PARAM,
 } from './flows_api';
 
@@ -50,6 +51,8 @@ export function DoUpdate(clear_cache = true) {
 }
 
 export function InfoSidebar(props) {
+  const announcement = localStorage.getItem('announcement');
+  const color_picker = new ColorPicker();
   return (
     <div>
       <PromotionBar />
@@ -58,7 +61,7 @@ export function InfoSidebar(props) {
       <div className="box list-menu">
         <a href={process.env.REACT_APP_RULES_URL} target="_blank">
           <span className="icon icon-textfile" />
-          <label>树洞规范</label>
+          <label>鼠洞规范</label>
         </a>
         &nbsp;&nbsp;
         <a href={process.env.REACT_APP_TOS_URL} target="_blank">
@@ -95,19 +98,41 @@ export function InfoSidebar(props) {
         </UnregisterPopup>
       </div>
       <div className="box help-desc-box">
+        {announcement && (
+          <p>
+            <strong>公告</strong>{' '}
+            <HighlightedMarkdown
+              text={announcement}
+              color_picker={color_picker}
+              show_pid={() => {}}
+            />
+          </p>
+        )}
+        <p>通过公众号「鼠洞 SHUer」可与我们取得联系</p>
+      </div>
+      <div className="box help-desc-box">
+        <p>酷悦鼠洞由上海酷悦科技有限公司运营维护。</p>
         <p>
-          <a onClick={DoUpdate}>强制检查更新</a>
-          （当前版本：【{process.env.REACT_APP_BUILD_INFO || '---'}{' '}
-          {process.env.NODE_ENV}】 会自动在后台检查更新并在下次访问时更新）
+          鼠洞的诞生离不开&nbsp;
+          <a
+            href="https://github.com/pkuhelper-web/webhole"
+            target="_blank"
+            rel="noopener"
+          >
+            P大鼠洞网页版 by @xmcp
+          </a>
+          、
+          <a href="https://reactjs.org/" target="_blank" rel="noopener">
+            React
+          </a>
+          、
+          <a href="https://icomoon.io/#icons" target="_blank" rel="noopener">
+            IcoMoon
+          </a>
+          &nbsp;等开源项目
         </p>
-      </div>
-      <div className="box help-desc-box">
-        <p>联系我们：{process.env.REACT_APP_CONTACT_EMAIL}</p>
-      </div>
-      <div className="box help-desc-box">
         <p>
-          {process.env.REACT_APP_TITLE} 网页版 by @
-          {process.env.REACT_APP_GITHUB_USER}， 基于&nbsp;
+          本项目也基于&nbsp;
           <a
             href="https://www.gnu.org/licenses/gpl-3.0.zh-cn.html"
             target="_blank"
@@ -119,25 +144,6 @@ export function InfoSidebar(props) {
             GitHub
           </a>{' '}
           开源
-        </p>
-        <p>
-          {process.env.REACT_APP_TITLE} 网页版的诞生离不开&nbsp;
-          <a
-            href="https://github.com/pkuhelper-web/webhole"
-            target="_blank"
-            rel="noopener"
-          >
-            P大树洞网页版 by @xmcp
-          </a>
-          、
-          <a href="https://reactjs.org/" target="_blank" rel="noopener">
-            React
-          </a>
-          、
-          <a href="https://icomoon.io/#icons" target="_blank" rel="noopener">
-            IcoMoon
-          </a>
-          &nbsp;等开源项目
         </p>
         <p>
           This program is free software: you can redistribute it and/or modify
@@ -237,7 +243,7 @@ export class LoginForm extends Component {
                       <p>
                         <button type="button" onClick={do_popup}>
                           <span className="icon icon-login" />
-                          &nbsp;登录
+                          &nbsp;登录/注册
                         </button>
                       </p>
                       <p>
@@ -312,9 +318,8 @@ export class PostForm extends Component {
     this.area_ref = this.props.area_ref || React.createRef();
     this.on_change_bound = this.on_change.bind(this);
     this.on_img_change_bound = this.on_img_change.bind(this);
-    this.global_keypress_handler_bound = this.global_keypress_handler.bind(
-      this,
-    );
+    this.global_keypress_handler_bound =
+      this.global_keypress_handler.bind(this);
     this.color_picker = new ColorPicker();
   }
 
@@ -700,7 +705,7 @@ export class PostForm extends Component {
             <small>
               发帖前请阅读并同意
               <a href={process.env.REACT_APP_RULES_URL} target="_blank">
-                树洞规范
+                鼠洞规范
               </a>
               &nbsp;
               <span style={{ float: 'right' }}>

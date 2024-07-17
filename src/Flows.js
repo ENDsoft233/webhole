@@ -144,7 +144,7 @@ export function load_single_meta(show_sidebar, token) {
   return (pid, replace = false) => {
     pid = parseInt(pid);
     let color_picker = new ColorPicker();
-    let title_elem = '树洞 ' + pid;
+    let title_elem = '鼠洞 ' + pid;
     show_sidebar(
       title_elem,
       <div className="box box-tip">正在加载 #{pid}</div>,
@@ -286,7 +286,7 @@ function ReportWidget(props) {
       set_tag: '打tag',
       report: '举报删除',
     }[report_type];
-    let item_type_str = { post: '树洞', comment: '评论' }[item_type];
+    let item_type_str = { post: '鼠洞', comment: '评论' }[item_type];
 
     let reason;
     switch (report_type) {
@@ -365,7 +365,7 @@ function ReportWidget(props) {
           <p>
             <button onClick={() => report('report')}>删除</button>
             <span className="report-reason">
-              这条{props.is_reply ? '回复' : '树洞'}违反
+              这条{props.is_reply ? '回复' : '鼠洞'}违反
               <a href={process.env.REACT_APP_RULES_URL} target="_blank">
                 社区规范
               </a>
@@ -381,7 +381,7 @@ function ReportWidget(props) {
           <span className="report-reason">
             {props.info.permissions.includes('delete_ban')
               ? '没有禁言惩罚的删除。'
-              : '树洞发送两分钟内可以撤回，不会禁言。'}
+              : '鼠洞发送两分钟内可以撤回，不会禁言。'}
           </span>
         </p>
       )}
@@ -530,13 +530,8 @@ class VoteShowBox extends PureComponent {
       });
   }
   render() {
-    const {
-      alreadyVote,
-      eachNums,
-      yourVoteIndex,
-      totalCount,
-      loading,
-    } = this.state;
+    const { alreadyVote, eachNums, yourVoteIndex, totalCount, loading } =
+      this.state;
     let { vote_data } = this.state;
     if (vote_data == 0) {
       vote_data = this.props.voteOptions.vote_data;
@@ -1143,7 +1138,7 @@ class FlowSidebar extends PureComponent {
             on_complete={this.load_replies.bind(this)}
           />
         ) : (
-          <div className="box box-tip flow-item">登录后可以回复树洞</div>
+          <div className="box box-tip flow-item">登录后可以回复鼠洞</div>
         )}
       </div>
     );
@@ -1265,7 +1260,7 @@ class FlowItemRow extends PureComponent {
 
   show_sidebar(freshFirst) {
     this.props.show_sidebar(
-      '树洞 #' + this.state.info.pid,
+      '鼠洞 #' + this.state.info.pid,
       <FlowSidebar
         key={+new Date()}
         info={this.state.info}
@@ -1545,7 +1540,7 @@ class FlowItemQuote extends PureComponent {
             });
           })
           .catch((err) => {
-            if (('' + err).indexOf('找不到这条树洞') !== -1)
+            if (('' + err).indexOf('找不到这条鼠洞') !== -1)
               this.setState({
                 loading_status: 'empty',
               });
@@ -1674,15 +1669,17 @@ export class Flow extends PureComponent {
               if (json.config) {
                 if (json.config.announcement) {
                   announcement = json.config.announcement;
+                  localStorage.setItem('announcement', announcement);
+                } else {
+                  localStorage.removeItem('announcement');
                 }
                 let versions_remote = json.config.web_frontend_version
                   .substring(1)
                   .split('.');
                 console.log('remote version:', versions_remote);
                 if (process.env.REACT_APP_BUILD_INFO) {
-                  let versions_local = process.env.REACT_APP_BUILD_INFO.substring(
-                    1,
-                  ).split('.');
+                  let versions_local =
+                    process.env.REACT_APP_BUILD_INFO.substring(1).split('.');
                   if (versions_remote.length >= 3) {
                     if (
                       versions_remote[0] > versions_local[0] ||
@@ -1888,7 +1885,7 @@ export class Flow extends PureComponent {
 
         {this.state.has_update ? (
           <div className="box flow-item box-warning">
-            <p>检测到更新，正在更新树洞...</p>
+            <p>检测到更新，正在更新鼠洞...</p>
             <p>
               <a onClick={DoUpdate}>[强制更新]</a>
             </p>
@@ -1926,7 +1923,7 @@ export class Flow extends PureComponent {
                 &nbsp;Loading...
               </span>
             ) : (
-              '© ' + process.env.REACT_APP_COPYRIGHT_STRING
+              process.env.REACT_APP_COPYRIGHT_STRING
             )
           }
         />

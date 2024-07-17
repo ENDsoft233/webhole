@@ -1,8 +1,8 @@
 import { API_VERSION_PARAM } from './old_infrastructure/functions';
-import { API_ROOT } from './old_infrastructure/const';
+import { API_ROOT, SECURITY_ROOT } from './old_infrastructure/const';
 import { cache } from './cache';
 
-export { API_ROOT, API_VERSION_PARAM };
+export { API_ROOT, SECURITY_ROOT, API_VERSION_PARAM };
 
 export function get_json(res) {
   if (!res.ok) throw Error(`网络错误 ${res.status} ${res.statusText}`);
@@ -176,10 +176,8 @@ export const API = {
 
   get_attention: async (page, token) => {
     let response = await fetch(
-      API_ROOT +
-        'contents/post/attentions?page=' +
-        page +
-        API_VERSION_PARAM(), {
+      API_ROOT + 'contents/post/attentions?page=' + page + API_VERSION_PARAM(),
+      {
         headers: {
           TOKEN: token,
         },

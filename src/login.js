@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import './login.css';
 
-import { API_ROOT } from './old_infrastructure/const';
+import { SECURITY_ROOT } from './old_infrastructure/const';
 import { API_VERSION_PARAM, get_json } from './old_infrastructure/functions';
 
 import {
@@ -109,7 +109,7 @@ class LoginPopupSelf extends Component {
 
   verify_email(version, failed_callback) {
     const old_token = new URL(location.href).searchParams.get('old_token');
-    const email = this.ref.username.current.value;
+    const email = this.ref.username.current.value + '@shu.edu.cn';
     const recaptcha_version = version;
     const recaptcha_token = localStorage['recaptcha'];
     // VALIDATE EMAIL IN FRONT-END HERE
@@ -152,7 +152,7 @@ class LoginPopupSelf extends Component {
   }
 
   async do_login(set_token) {
-    const email = this.ref.username.current.value;
+    const email = this.ref.username.current.value + '@shu.edu.cn';
     const password = this.ref.password.current.value;
     let password_hashed = await this.hashpassword(password);
     const device_info = UAParser(navigator.userAgent).browser.name;
@@ -200,7 +200,7 @@ class LoginPopupSelf extends Component {
 
   async new_user_registration(set_token) {
     if (this.valid_registration() !== 0) return;
-    const email = this.ref.username.current.value;
+    const email = this.ref.username.current.value + '@shu.edu.cn';
     const valid_code = this.ref.email_verification.current.value;
     const password = this.ref.password.current.value;
     let password_hashed = await this.hashpassword(password);
@@ -249,7 +249,7 @@ class LoginPopupSelf extends Component {
 
   async old_user_registration(set_token) {
     if (this.valid_registration() !== 0) return;
-    const email = this.ref.username.current.value;
+    const email = this.ref.username.current.value + '@shu.edu.cn';
     const old_token = new URL(location.href).searchParams.get('old_token');
     const password = this.ref.password.current.value;
     let password_hashed = await this.hashpassword(password);
@@ -315,7 +315,7 @@ class LoginPopupSelf extends Component {
             {this.state.phase === -1 && (
               <>
                 <p>
-                  <b>输入邮箱来登录 {process.env.REACT_APP_TITLE}</b>
+                  <b>使用上大邮箱来登录到{process.env.REACT_APP_TITLE}</b>
                 </p>
               </>
             )}
@@ -326,13 +326,14 @@ class LoginPopupSelf extends Component {
                   ref={this.ref.username}
                   type="email"
                   autoFocus={true}
-                  defaultValue="@mails.tsinghua.edu.cn"
+                  defaultValue=""
                   onKeyDown={(event) => {
                     if (event.key === 'Enter') {
                       this.next_step();
                     }
                   }}
                 />
+                @shu.edu.cn
               </label>
             </p>
             {this.state.phase === 0 && (
@@ -359,7 +360,7 @@ class LoginPopupSelf extends Component {
                   <a
                     onClick={() => {
                       alert(
-                        '在树洞网页版的“账户”界面，可以注销账号之后重新注册树洞。',
+                        '在鼠洞网页版的“账户”界面，可以注销账号之后重新注册鼠洞。',
                       );
                     }}
                   >
