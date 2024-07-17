@@ -249,7 +249,7 @@ export class LoginForm extends Component {
                       <p>
                         <small>
                           {process.env.REACT_APP_TITLE}
-                          面向T大学生，通过T大邮箱验证您的身份并提供服务。
+                          面向上海大学校内用户，请使用校园邮箱登录（我们将在之后支持更多验证方式）
                         </small>
                       </p>
                     </div>
