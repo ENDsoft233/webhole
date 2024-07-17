@@ -530,8 +530,13 @@ class VoteShowBox extends PureComponent {
       });
   }
   render() {
-    const { alreadyVote, eachNums, yourVoteIndex, totalCount, loading } =
-      this.state;
+    const {
+      alreadyVote,
+      eachNums,
+      yourVoteIndex,
+      totalCount,
+      loading,
+    } = this.state;
     let { vote_data } = this.state;
     if (vote_data == 0) {
       vote_data = this.props.voteOptions.vote_data;
@@ -1678,8 +1683,9 @@ export class Flow extends PureComponent {
                   .split('.');
                 console.log('remote version:', versions_remote);
                 if (process.env.REACT_APP_BUILD_INFO) {
-                  let versions_local =
-                    process.env.REACT_APP_BUILD_INFO.substring(1).split('.');
+                  let versions_local = process.env.REACT_APP_BUILD_INFO.substring(
+                    1,
+                  ).split('.');
                   if (versions_remote.length >= 3) {
                     if (
                       versions_remote[0] > versions_local[0] ||

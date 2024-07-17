@@ -25,9 +25,9 @@ let md = new MarkdownIt({
       '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + '</code></pre>'
     );
   },
-// }).use(MarkdownItKaTeX, {
-//   throwOnError: false,
-//   errorColor: '#aa0000',
+  // }).use(MarkdownItKaTeX, {
+  //   throwOnError: false,
+  //   errorColor: '#aa0000',
 });
 
 export default (text) => md.render(text);

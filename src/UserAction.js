@@ -318,8 +318,9 @@ export class PostForm extends Component {
     this.area_ref = this.props.area_ref || React.createRef();
     this.on_change_bound = this.on_change.bind(this);
     this.on_img_change_bound = this.on_img_change.bind(this);
-    this.global_keypress_handler_bound =
-      this.global_keypress_handler.bind(this);
+    this.global_keypress_handler_bound = this.global_keypress_handler.bind(
+      this,
+    );
     this.color_picker = new ColorPicker();
   }
 
