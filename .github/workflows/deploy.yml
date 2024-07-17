@@ -2,7 +2,7 @@ name: Deploy to COS
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   workflow_dispatch:
 
 permissions:
@@ -20,14 +20,15 @@ jobs:
     - name: Setup Node.js environment
       uses: actions/setup-node@v4.0.2
       with:
-        node-version: 18.x
-        cache: 'yarn'
+        node-version: 16.x
+    - name: Install Git submodules
+      run: git submodule update --init --recursive
     - name: Install dependencies
-      run: yarn install
+      run: npm install
     - name: Replace version
       run: node deploy/version.cjs $GITHUB_SHA
     - name: Build Project
-      run: yarn build
+      run: CI=false npm run build
     - name: Install coscmd
       run: sudo pip install coscmd
     - name: Configure coscmd
@@ -38,6 +39,6 @@ jobs:
         REGION: ap-shanghai
       run: coscmd config -a $SECRET_ID -s $SECRET_KEY -b $BUCKET -r $REGION
     - name: Upload to COS
-      run: cd ./dist && coscmd upload -rs --delete -f ./ / && cd ..
+      run: cd ./build && coscmd upload -rs --delete -f ./ / && cd ..
     - name: Refresh CDN
       run: node deploy/refresh.cjs ${{ env.SECRET_ID }} ${{ env.SECRET_KEY }}
