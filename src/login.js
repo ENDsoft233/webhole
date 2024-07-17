@@ -125,7 +125,7 @@ class LoginPopupSelf extends Component {
         loading_status: 'loading',
       },
       () => {
-        fetch(API_ROOT + 'security/login/check_email?' + API_VERSION_PARAM(), {
+        fetch(SECURITY_ROOT + 'login/check_email?' + API_VERSION_PARAM(), {
           method: 'POST',
           body,
         })
@@ -169,7 +169,7 @@ class LoginPopupSelf extends Component {
         loading_status: 'loading',
       },
       () => {
-        fetch(API_ROOT + 'security/login/login?' + API_VERSION_PARAM(), {
+        fetch(SECURITY_ROOT + 'login/login?' + API_VERSION_PARAM(), {
           method: 'POST',
           body,
         })
@@ -218,13 +218,10 @@ class LoginPopupSelf extends Component {
         loading_status: 'loading',
       },
       () => {
-        fetch(
-          API_ROOT + 'security/login/create_account?' + API_VERSION_PARAM(),
-          {
-            method: 'POST',
-            body,
-          },
-        )
+        fetch(SECURITY_ROOT + 'login/create_account?' + API_VERSION_PARAM(), {
+          method: 'POST',
+          body,
+        })
           .then(get_json)
           .then((json) => {
             if (json.code !== 0) {
@@ -270,13 +267,10 @@ class LoginPopupSelf extends Component {
         loading_status: 'loading',
       },
       () => {
-        fetch(
-          API_ROOT + 'security/login/create_account?' + API_VERSION_PARAM(),
-          {
-            method: 'POST',
-            body,
-          },
-        )
+        fetch(SECURITY_ROOT + 'login/create_account?' + API_VERSION_PARAM(), {
+          method: 'POST',
+          body,
+        })
           .then(get_json)
           .then((json) => {
             if (json.code !== 0) {

@@ -185,15 +185,12 @@ export class LoginForm extends Component {
                     <button
                       type="button"
                       onClick={() => {
-                        fetch(
-                          API_ROOT + 'security/logout?' + API_VERSION_PARAM(),
-                          {
-                            method: 'POST',
-                            headers: {
-                              TOKEN: token.value,
-                            },
+                        fetch(SECURITY_ROOT + 'logout?' + API_VERSION_PARAM(), {
+                          method: 'POST',
+                          headers: {
+                            TOKEN: token.value,
                           },
-                        )
+                        })
                           .then(get_json)
                           .then((json) => {
                             if (json.code !== 0) throw new Error(json.msg);

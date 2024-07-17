@@ -81,9 +81,7 @@ class UnregisterPopupSelf extends Component {
       },
       () => {
         fetch(
-          API_ROOT +
-            'security/login/check_email_unregister?' +
-            API_VERSION_PARAM(),
+          SECURITY_ROOT + 'login/check_email_unregister?' + API_VERSION_PARAM(),
           {
             method: 'POST',
             body,
@@ -127,7 +125,7 @@ class UnregisterPopupSelf extends Component {
         loading_status: 'loading',
       },
       () => {
-        fetch(API_ROOT + 'security/login/unregister?' + API_VERSION_PARAM(), {
+        fetch(SECURITY_ROOT + 'login/unregister?' + API_VERSION_PARAM(), {
           method: 'POST',
           body,
         })
