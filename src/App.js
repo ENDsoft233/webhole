@@ -45,6 +45,7 @@ class App extends Component {
     // a silly self-deceptive approach to ban guests, enough to fool those muggles
     //                     document             cookie                    'pku_ip_flag=yes'
     this.inthu_flag =
+      true ||
       window[atob('ZG9jdW1lbnQ')][atob('Y29va2ll')].indexOf(
         atob('dGh1X2lwX2ZsYWc9eWVz'),
       ) !== -1;
@@ -195,20 +196,20 @@ class App extends Component {
                 (this.state.override_suicide ||
                   !needShowSuicidePrompt(this.state.search_text)) && (
                     <SwitchTransition mode="out-in">
-                      <CSSTransition
-                        key={this.state.flow_render_key}
-                        timeout={100}
-                        classNames="flows-anim"
-                      >
+                    <CSSTransition
+                      key={this.state.flow_render_key}
+                      timeout={100}
+                      classNames="flows-anim"
+                    >
                         <Flow
-                          key={this.state.flow_render_key}
-                          show_sidebar={this.show_sidebar_bound}
-                          mode={this.state.mode}
-                          search_text={this.state.search_text}
-                          token={token.value}
-                        />
+                        key={this.state.flow_render_key}
+                        show_sidebar={this.show_sidebar_bound}
+                        mode={this.state.mode}
+                        search_text={this.state.search_text}
+                        token={token.value}
+                      />
                       </CSSTransition>
-                    </SwitchTransition>
+                  </SwitchTransition>
                 )
               ) : (
                 <TitleLine text="请登录后查看内容" />
