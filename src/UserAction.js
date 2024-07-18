@@ -12,6 +12,7 @@ import { ConfigUI } from './Config';
 import fixOrientation from 'fix-orientation';
 import copy from 'copy-to-clipboard';
 import { cache } from './cache';
+import { ScanCodePopup } from './ScanCodePopup';
 import {
   // API_VERSION_PARAM,
   // THUHOLE_API_ROOT,
@@ -107,6 +108,12 @@ export function InfoSidebar(props) {
           </p>
         )}
         <p>通过公众号「鼠洞 SHUer」可与我们取得联系</p>
+      </div>
+      <div className="box help-desc-box">
+        <p>
+          <strong>客户端版本 {process.env.REACT_APP_BUILD_INFO}</strong>{' '}
+          <a onClick={DoUpdate}>强制检查更新</a>
+        </p>
       </div>
       <div className="box help-desc-box">
         <p>酷悦鼠洞由上海酷悦科技有限公司运营维护。</p>
@@ -238,13 +245,18 @@ export class LoginForm extends Component {
                 <LoginPopup token_callback={token.set_value}>
                   {(do_popup) =>
                     wechat ? (
-                      <div>
-                        <small>
-                          鼠洞面向上海大学校内用户
-                          <br />
-                          请按照流程关注公众号验证身份后登录
-                        </small>
-                      </div>
+                      <ScanCodePopup token_callback={token.set_value}>
+                        {(do_popup) => (
+                          <div>
+                            <p>
+                              鼠洞面向上海大学校内用户
+                              <br />
+                              <a onClick={do_popup}>验证身份</a>
+                              后自动登录
+                            </p>
+                          </div>
+                        )}
+                      </ScanCodePopup>
                     ) : (
                       <div>
                         <p>
