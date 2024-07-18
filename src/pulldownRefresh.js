@@ -3,7 +3,8 @@ import * as React from 'react';
 import './pulldownRefresh.css';
 
 export default function PulldownRefresh(props) {
-  const { handleRefresh } = props;
+  const { enable, handleRefresh } = props;
+  const enableRef = React.useRef(enable);
   const [loading, setLoading] = React.useState(false);
   const loadingRef = React.useRef(false);
   const [startY, setStartY] = React.useState(0);
@@ -16,7 +17,7 @@ export default function PulldownRefresh(props) {
   const animationRef = React.useRef(false);
   const validStart = React.useRef(false);
   const handleTouchStart = (e) => {
-    if (window.scrollY === 0) {
+    if (window.scrollY === 0 && enableRef.current) {
       startYRef.current = e.touches[0].clientY;
       setStartY(startYRef.current);
       validStart.current = true;
@@ -64,6 +65,7 @@ export default function PulldownRefresh(props) {
   const ref = React.useRef(null);
   React.useEffect(() => {
     const { current } = ref;
+    enableRef.current = props.enable;
     current.addEventListener('touchstart', handleTouchStart, {
       passive: false,
       capture: true,
@@ -76,7 +78,7 @@ export default function PulldownRefresh(props) {
       passive: false,
       capture: true,
     });
-  }, []);
+  }, [props.enable]);
   return (
     <div ref={ref}>
       {props.children}

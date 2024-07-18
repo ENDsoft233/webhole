@@ -187,6 +187,8 @@ class App extends Component {
     const wechat = sessionStorage.getItem('LOGINVIAWECHAT');
     return (
       <PulldownRefresh
+        enable={this.state.sidebar_stack.length === 1}
+        test={this.state.sidebar_stack}
         handleRefresh={() => {
           return new Promise((resolve) => {
             this.set_mode('list', null);
