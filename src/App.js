@@ -48,69 +48,102 @@ class App extends Component {
     this.show_sidebar_bound = this.show_sidebar.bind(this);
     this.set_mode_bound = this.set_mode.bind(this);
     this.on_pressure_bound = this.on_pressure.bind(this);
-    // a silly self-deceptive approach to ban guests, enough to fool those muggles
-    //                     document             cookie                    'pku_ip_flag=yes'
-    this.inthu_flag =
-      true ||
-      window[atob('ZG9jdW1lbnQ')][atob('Y29va2ll')].indexOf(
-        atob('dGh1X2lwX2ZsYWc9eWVz'),
-      ) !== -1;
-    if (new URLSearchParams(window.location.search).get('code') || null) {
-      // 尝试使用微信登录
-      sessionStorage.setItem('LOGINVIAWECHAT', 'true');
-      const device_info = UAParser(navigator.userAgent).browser.name;
-      const body = new URLSearchParams();
-      Object.entries({
-        code: new URLSearchParams(window.location.search).get('code'),
-        device_type: 0,
-        device_info,
-      }).forEach((param) => body.append(...param));
-      fetch(SECURITY_ROOT + 'login/login_wechat?' + API_VERSION_PARAM(), {
-        method: 'POST',
-        body,
+
+    if (!this.state.token) {
+      fetch(SECURITY_ROOT + 'login/subnet_check?' + API_VERSION_PARAM(), {
+        method: 'get',
       })
         .then(get_json)
         .then((json) => {
-          if (json.code !== 0) {
-            if (json.msg) console.log(json.msg);
-            console.log(JSON.stringify(json));
-          } else {
-            localStorage.setItem('TOKEN', json.token);
-            location.href = '/';
-          }
-        })
-        .catch((e) => {
-          console.error(e);
+          this.inshu_flag = json.code === 0;
+          this.set_mode('list', null);
         });
     }
+
     if (
       new URLSearchParams(window.location.search).get('access_token') ||
+      new URLSearchParams(window.location.search).get('code') ||
       null
     ) {
-      // 尝试使用微信登录
+      const codeMode =
+        new URLSearchParams(window.location.search).get('code') !== null;
       sessionStorage.setItem('LOGINVIAWECHAT', 'true');
       const device_info = UAParser(navigator.userAgent).browser.name;
       const body = new URLSearchParams();
-      Object.entries({
-        access_token: new URLSearchParams(window.location.search).get(
-          'access_token',
-        ),
-        openid: new URLSearchParams(window.location.search).get('openid'),
-        device_type: 0,
-        device_info,
-      }).forEach((param) => body.append(...param));
-      fetch(SECURITY_ROOT + 'login/login_charging?' + API_VERSION_PARAM(), {
-        method: 'POST',
-        body,
-      })
+      if (codeMode) {
+        Object.entries({
+          code: new URLSearchParams(window.location.search).get('code'),
+          device_type: 0,
+          device_info,
+        }).forEach((param) => body.append(...param));
+      } else {
+        Object.entries({
+          access_token: new URLSearchParams(window.location.search).get(
+            'access_token',
+          ),
+          openid: new URLSearchParams(window.location.search).get('openid'),
+          device_type: 0,
+          device_info,
+        }).forEach((param) => body.append(...param));
+      }
+      fetch(
+        SECURITY_ROOT +
+          'login/login_' +
+          (codeMode ? 'wechat?' : 'charging?') +
+          API_VERSION_PARAM(),
+        {
+          method: 'POST',
+          body,
+        },
+      )
         .then(get_json)
         .then((json) => {
           if (json.code !== 0) {
-            if (json.msg) console.log(json.msg);
-            console.log(JSON.stringify(json));
+            if (!codeMode) {
+              const body = new URLSearchParams();
+              Object.entries({
+                access_token: new URLSearchParams(window.location.search).get(
+                  'access_token',
+                ),
+                openid: new URLSearchParams(window.location.search).get(
+                  'openid',
+                ),
+                device_type: 0,
+                device_info,
+              }).forEach((param) => body.append(...param));
+              fetch(
+                SECURITY_ROOT +
+                  'login/create_wechat_account?' +
+                  API_VERSION_PARAM(),
+                {
+                  method: 'POST',
+                  body,
+                },
+              )
+                .then(get_json)
+                .then((json) => {
+                  if (json.code === 0) {
+                    localStorage.setItem('TOKEN', json.token);
+                    this.setState({
+                      token: json.token,
+                    });
+                    this.set_mode('list', null);
+                  }
+                });
+            }
           } else {
-            localStorage.setItem('TOKEN', json.token);
-            location.href = '/';
+            if (this.state.token) {
+              localStorage.setItem('TOKEN', json.token);
+              this.setState({
+                token: json.token,
+              });
+            } else {
+              localStorage.setItem('TOKEN', json.token);
+              this.setState({
+                token: json.token,
+              });
+              this.set_mode('list', null);
+            }
           }
         })
         .catch((e) => {
@@ -229,7 +262,7 @@ class App extends Component {
                             wechat ? (
                               <div>
                                 <span className="icon icon-login" />
-                                &nbsp;请至公众号完成身份验证
+                                &nbsp;需要进行鼠鼠身份验证
                               </div>
                             ) : (
                               <a onClick={do_popup}>
@@ -280,7 +313,7 @@ class App extends Component {
                       </div>
                     </div>
                   )}
-                {this.inthu_flag || token.value ? (
+                {this.inshu_flag || token.value ? (
                   (this.state.override_suicide ||
                     !needShowSuicidePrompt(this.state.search_text)) && (
                     <SwitchTransition mode="out-in">
@@ -301,9 +334,9 @@ class App extends Component {
                     </SwitchTransition>
                   )
                 ) : wechat ? (
-                  <TitleLine text="至公众号完成身份验证后查看内容" />
+                  <TitleLine text="完成身份验证或连接校园网后访问鼠洞" />
                 ) : (
-                  <TitleLine text="请登录后查看内容" />
+                  <TitleLine text="请登录或使用校园网访问鼠洞" />
                 )}
                 <br />
               </div>
