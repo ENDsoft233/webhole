@@ -42,7 +42,6 @@ class App extends Component {
       flow_render_key: +new Date(),
       token: localStorage['TOKEN'] || null,
       override_suicide: false,
-      code: new URLSearchParams(window.location.search).get('code') || null,
     };
     this.show_sidebar_bound = this.show_sidebar.bind(this);
     this.set_mode_bound = this.set_mode.bind(this);
@@ -54,17 +53,51 @@ class App extends Component {
       window[atob('ZG9jdW1lbnQ')][atob('Y29va2ll')].indexOf(
         atob('dGh1X2lwX2ZsYWc9eWVz'),
       ) !== -1;
-    if (this.state.code) {
+    if (new URLSearchParams(window.location.search).get('code') || null) {
       // 尝试使用微信登录
       sessionStorage.setItem('LOGINVIAWECHAT', 'true');
       const device_info = UAParser(navigator.userAgent).browser.name;
       const body = new URLSearchParams();
       Object.entries({
-        code: this.state.code,
+        code: new URLSearchParams(window.location.search).get('code'),
         device_type: 0,
         device_info,
       }).forEach((param) => body.append(...param));
       fetch(SECURITY_ROOT + 'login/login_wechat?' + API_VERSION_PARAM(), {
+        method: 'POST',
+        body,
+      })
+        .then(get_json)
+        .then((json) => {
+          if (json.code !== 0) {
+            if (json.msg) console.log(json.msg);
+            console.log(JSON.stringify(json));
+          } else {
+            localStorage.setItem('TOKEN', json.token);
+            location.pathname = '/';
+          }
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+    }
+    if (
+      new URLSearchParams(window.location.search).get('access_token') ||
+      null
+    ) {
+      // 尝试使用微信登录
+      sessionStorage.setItem('LOGINVIAWECHAT', 'true');
+      const device_info = UAParser(navigator.userAgent).browser.name;
+      const body = new URLSearchParams();
+      Object.entries({
+        access_token: new URLSearchParams(window.location.search).get(
+          'access_token',
+        ),
+        openid: new URLSearchParams(window.location.search).get('openid'),
+        device_type: 0,
+        device_info,
+      }).forEach((param) => body.append(...param));
+      fetch(SECURITY_ROOT + 'login/login_charging?' + API_VERSION_PARAM(), {
         method: 'POST',
         body,
       })
@@ -170,15 +203,15 @@ class App extends Component {
           mode={this.state.mode}
         />
           <TokenCtx.Consumer>
-            {(token) => (
+          {(token) => (
                   <div className="left-container">
                 <DeprecatedAlert token={token.value} />
-              {!token.value && (
-                      <div className="flow-item-row aux-margin">
-                    <div className="box box-tip">
-                      <p>
+                {!token.value && (
+              <div className="flow-item-row aux-margin">
+                  <div className="box box-tip">
+                        <p>
                       <LoginPopup token_callback={token.set_value}>
-                            {(do_popup) =>
+                                {(do_popup) =>
                           wechat ? (
                               <div>
                                 <span className="icon icon-login" />
@@ -186,38 +219,38 @@ class App extends Component {
                             </div>
                           ) : (
                               <a onClick={do_popup}>
-                              <span className="icon icon-login" />
+                                <span className="icon icon-login" />
                               &nbsp;登录到 {process.env.REACT_APP_TITLE}
                             </a>
                           )
                         }
-                        </LoginPopup>
-                        </p>
-                  </div>
+                            </LoginPopup>
+                    </p>
+                    </div>
                 </div>
               )}
               {needShowSuicidePrompt(this.state.search_text) &&
                 !this.state.override_suicide && (
                   <div className="flow-item-row">
                     <div className="flow-item box box-tip">
-                      <p style={{ textAlign: 'left' }}>需要帮助？</p>
+                          <p style={{ textAlign: 'left' }}>需要帮助？</p>
                           <p style={{ textAlign: 'left' }}>
-                          北京24小时心理援助热线：
+                            北京24小时心理援助热线：
                         <a href="tel:01082951332">010-8295-1332</a>
                       </p>
-                      <p style={{ textAlign: 'left' }}>
-                            希望24小时热线：
+                          <p style={{ textAlign: 'left' }}>
+                          希望24小时热线：
                         <a href="tel:4001619995">400-161-9995</a>
-                        </p>
+                      </p>
                           <hr />
-                          <p>
-                        <button
+                      <p>
+                            <button
                           onClick={() => {
                             window.location.href =
                               'https://www.zhihu.com/question/25082178/answer/106073121';
                           }}
                         >
-                                  了解更多
+                            了解更多
                         </button>
                         &nbsp; &nbsp; &nbsp;
                         <button
@@ -227,9 +260,9 @@ class App extends Component {
                             });
                           }}
                         >
-                                  展示结果
+                              展示结果
                         </button>
-                      </p>
+                        </p>
                       </div>
                 </div>
                 )}
@@ -242,7 +275,7 @@ class App extends Component {
                       timeout={100}
                       classNames="flows-anim"
                     >
-                      <Flow
+                        <Flow
                         key={this.state.flow_render_key}
                         show_sidebar={this.show_sidebar_bound}
                         mode={this.state.mode}
@@ -257,7 +290,7 @@ class App extends Component {
               ) : (
                   <TitleLine text="请登录后查看内容" />
               )}
-              <br />
+                <br />
             </div>
           )}
         </TokenCtx.Consumer>
