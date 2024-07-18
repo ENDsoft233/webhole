@@ -1713,7 +1713,7 @@ export class Flow extends PureComponent {
             });
             this.setState((prev, props) => ({
               chunks: {
-                title: 'News Feed',
+                title: '',
                 data: prev.chunks.data.concat(
                   json.data.filter(
                     (x) =>
@@ -1748,7 +1748,10 @@ export class Flow extends PureComponent {
             });
             this.setState((prev, props) => ({
               chunks: {
-                title: 'Result for "' + this.state.search_param + '"',
+                title:
+                  this.state.search_param === '热榜'
+                    ? '热门鼠洞'
+                    : '"' + this.state.search_param + '" 的搜索结果',
                 data: prev.chunks.data.concat(
                   json.data.filter(
                     (x) =>
@@ -1787,9 +1790,7 @@ export class Flow extends PureComponent {
               this.setState((prev, props) => ({
                 chunks: {
                   title:
-                    'Result for "' +
-                    this.state.search_param +
-                    '" in Attention List',
+                    '关注列表中 "' + this.state.search_param + '" 的搜索结果',
                   data: prev.chunks.data.concat(
                     json.data.filter(
                       (x) =>
