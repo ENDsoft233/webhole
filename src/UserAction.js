@@ -55,120 +55,113 @@ export function InfoSidebar(props) {
   const wechat = sessionStorage.getItem('LOGINVIAWECHAT') === 'true';
   const color_picker = new ColorPicker();
   return (
-      <div>
-        <PromotionBar />
-        <BrowserWarningBar />
-        <LoginForm show_sidebar={props.show_sidebar} />
+    <div>
+      <PromotionBar />
+      <BrowserWarningBar />
+      <LoginForm show_sidebar={props.show_sidebar} />
       <div className="box list-menu">
-              {/* <a href={process.env.REACT_APP_RULES_URL} target="_blank">
+        {/* <a href={process.env.REACT_APP_RULES_URL}>
           <span className="icon icon-textfile" />
           <label>鼠洞规范</label>
         </a>
         &nbsp;&nbsp;
-        <a href={process.env.REACT_APP_TOS_URL} target="_blank">
+        <a href={process.env.REACT_APP_TOS_URL}>
           <span className="icon icon-textfile" />
           <label>服务协议</label>
         </a>
         &nbsp;&nbsp;
-        <a href={process.env.REACT_APP_PRIVACY_URL} target="_blank">
+        <a href={process.env.REACT_APP_PRIVACY_URL}>
           <span className="icon icon-textfile" />
           <label>隐私政策</label>
         </a>
         <br /> */}
-              <a
+        <a
           onClick={() => {
             props.show_sidebar('设置', <ConfigUI />);
           }}
         >
-              <span className="icon icon-settings" />
-              <label>设置</label>
+          <span className="icon icon-settings" />
+          <label>设置</label>
         </a>
-              {!wechat && <React.Fragment>&nbsp;&nbsp;</React.Fragment>}
+        {!wechat && <React.Fragment>&nbsp;&nbsp;</React.Fragment>}
         {!wechat && (
           <UnregisterPopup>
-              {(do_popup) => (
+            {(do_popup) => (
               <a onClick={do_popup}>
-                          <span className="icon icon-refresh" />
-                          <label>注销账户/找回密码</label>
-                      </a>
+                <span className="icon icon-refresh" />
+                <label>注销账户/找回密码</label>
+              </a>
             )}
           </UnregisterPopup>
         )}
-          </div>
-        <div className="box help-desc-box">
+      </div>
+      <div className="box help-desc-box">
         {announcement && (
-            <p>
+          <p>
             <strong>公告</strong>{' '}
             <HighlightedMarkdown
               text={announcement}
               color_picker={color_picker}
               show_pid={() => {}}
             />
-        </p>
+          </p>
         )}
-          <p>通过公众号「鼠洞 SHUer」可与我们取得联系</p>
+        <p>通过公众号「鼠洞 SHUer」可与我们取得联系</p>
       </div>
-        <div className="box help-desc-box">
-          <p>酷悦鼠洞由上海酷悦科技有限公司运营维护。</p>
-          <p>
-                鼠洞的诞生离不开&nbsp;
-          <a
-            href="https://github.com/thuhole/webhole"
-            target="_blank"
-            rel="noopener"
-          >
-              T大树洞
+      <div className="box help-desc-box">
+        <p>酷悦鼠洞由上海酷悦科技有限公司运营维护。</p>
+        <p>
+          鼠洞的诞生离不开&nbsp;
+          <a href="https://github.com/thuhole/webhole" disabled rel="noopener">
+            T大树洞
           </a>
-                、
+          、
           <a
             href="https://github.com/pkuhelper-web/webhole"
-            target="_blank"
+            disabled
             rel="noopener"
           >
-              P大鼠洞
+            P大鼠洞
           </a>
-                、
-          <a href="https://reactjs.org/" target="_blank" rel="noopener">
-              React
+          、
+          <a href="https://reactjs.org/" disabled rel="noopener">
+            React
           </a>
-                、
-          <a href="https://icomoon.io/#icons" target="_blank" rel="noopener">
-              IcoMoon
+          、
+          <a href="https://icomoon.io/#icons" disabled rel="noopener">
+            IcoMoon
           </a>
           &nbsp;等开源项目
         </p>
-          <p>
-            本项目也基于&nbsp;
-          <a
-            href="https://www.gnu.org/licenses/gpl-3.0.zh-cn.html"
-            target="_blank"
-          >
-              GPLv3
+        <p>
+          本项目也基于&nbsp;
+          <a href="https://www.gnu.org/licenses/gpl-3.0.zh-cn.html" disabled>
+            GPLv3
           </a>
           &nbsp;协议在{' '}
-            <a href={process.env.REACT_APP_GITHUB_WEB_URL} target="_blank">
-              GitHub
+          <a href={process.env.REACT_APP_GITHUB_WEB_URL} disabled>
+            GitHub
           </a>{' '}
-            开源
+          开源
         </p>
         <p>
-                This program is free software: you can redistribute it and/or modify
-                it under the terms of the GNU General Public License as published by
-                the Free Software Foundation, either version 3 of the License, or (at
-                your option) any later version.
+          This program is free software: you can redistribute it and/or modify
+          it under the terms of the GNU General Public License as published by
+          the Free Software Foundation, either version 3 of the License, or (at
+          your option) any later version.
         </p>
-          <p>
-                This program is distributed in the hope that it will be useful, but
-                WITHOUT ANY WARRANTY; without even the implied warranty of
-                MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the&nbsp;
+        <p>
+          This program is distributed in the hope that it will be useful, but
+          WITHOUT ANY WARRANTY; without even the implied warranty of
+          MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the&nbsp;
           <a
             href="https://www.gnu.org/licenses/gpl-3.0.zh-cn.html"
             target="_blank"
           >
-              GNU General Public License
+            GNU General Public License
           </a>
           &nbsp;for more details.
-            </p>
+        </p>
       </div>
     </div>
   );
@@ -187,15 +180,17 @@ export class LoginForm extends Component {
   render() {
     const wechat = sessionStorage.getItem('LOGINVIAWECHAT') === 'true';
     return (
-        <TokenCtx.Consumer>
-          {(token) => (
+      <TokenCtx.Consumer>
+        {(token) => (
+          <div>
+            <div className="login-form box">
+              {token.value ? (
                 <div>
-              <div className="login-form box">
-                {token.value ? (
-                      <div>
                   <p>
-                        {wechat ? (<b>已通过微信登录</b>) : (
-                              <button
+                    {wechat ? (
+                      <b>已通过微信登录</b>
+                    ) : (
+                      <button
                         type="button"
                         onClick={() => {
                           fetch(
@@ -219,62 +214,62 @@ export class LoginForm extends Component {
                             });
                         }}
                       >
-                                    <span className="icon icon-logout" /> 注销
-                                </button>
+                        <span className="icon icon-logout" /> 注销
+                      </button>
                     )}
-                        <br />
-                    </p>
+                    <br />
+                  </p>
                   <p>
-                        <a
+                    <a
                       onClick={() => {
                         this.props.show_sidebar(
                           '系统消息',
-                            <MessageViewer token={token.value} />,
+                          <MessageViewer token={token.value} />,
                         );
                       }}
                     >
-                        查看系统消息
+                      查看系统消息
                     </a>
-                        <br />
-                        当您发送的内容违规时
                     <br />
-                        我们将用系统消息提示您
+                    当您发送的内容违规时
+                    <br />
+                    我们将用系统消息提示您
                   </p>
                   {/*<p>*/}
-                      {/*  <a onClick={this.copy_token.bind(this, token.value)}>*/}
+                  {/*  <a onClick={this.copy_token.bind(this, token.value)}>*/}
                   {/*    复制 User Token*/}
-                      {/*  </a>*/}
-                      {/*  <br />*/}
+                  {/*  </a>*/}
+                  {/*  <br />*/}
                   {/*  复制 User Token*/}
-                      {/*  可以在新设备登录，切勿告知他人。若怀疑被盗号请重新邮箱验证码登录以重置Token。*/}
+                  {/*  可以在新设备登录，切勿告知他人。若怀疑被盗号请重新邮箱验证码登录以重置Token。*/}
                   {/*</p>*/}
-                  </div>
+                </div>
               ) : (
-                  <LoginPopup token_callback={token.set_value}>
+                <LoginPopup token_callback={token.set_value}>
                   {(do_popup) =>
                     wechat ? (
-                        <div>
-                          <small>
-                            鼠洞面向上海大学校内用户
-                            <br />
-                            请按照流程关注公众号验证身份后登录
-                          </small>
+                      <div>
+                        <small>
+                          鼠洞面向上海大学校内用户
+                          <br />
+                          请按照流程关注公众号验证身份后登录
+                        </small>
                       </div>
                     ) : (
-                        <div>
+                      <div>
                         <p>
                           <button type="button" onClick={do_popup}>
-                                <span className="icon icon-login" />
+                            <span className="icon icon-login" />
                             &nbsp;登录/注册
                           </button>
-                            </p>
-                          <p>
-                            <small>
+                        </p>
+                        <p>
+                          <small>
                             {process.env.REACT_APP_TITLE}
-                                  面向上海大学校内用户
-                              <br />
-                                  请使用校园邮箱注册登录
-                            </small>
+                            面向上海大学校内用户
+                            <br />
+                            请使用校园邮箱注册登录
+                          </small>
                         </p>
                       </div>
                     )
@@ -305,7 +300,7 @@ export class VoteEditBox extends Component {
     const inputPile = [];
     for (let i = 0; i < num; i += 1) {
       inputPile.push(
-          <input
+        <input
           key={i}
           maxLength="15"
           style={{ padding: '0 2px', margin: '2px 2px' }}
@@ -317,10 +312,10 @@ export class VoteEditBox extends Component {
       );
     }
     return (
-        <div>
-          <hr />
-          <p>设置2~4个选项，每项不超过15字符</p>
-          {inputPile}
+      <div>
+        <hr />
+        <p>设置2~4个选项，每项不超过15字符</p>
+        {inputPile}
       </div>
     );
   }
@@ -601,31 +596,31 @@ export class PostForm extends Component {
       'reply-form box' + (this.state.text ? ' reply-sticky' : '');
     let tagsArrayAfter = process.env.REACT_APP_SENDABLE_TAGS.split(',');
     return (
-        <form
+      <form
         onSubmit={this.on_submit.bind(this)}
         className={
           this.props.action === 'dopost' ? 'post-form box' : replyClassName
         }
       >
-          <div className="post-form-bar">
+        <div className="post-form-bar">
           <label>
-                  {/*<a>上传图片</a>*/}
+            {/*<a>上传图片</a>*/}
             <span className={'post-upload'}>
-                  <span className="icon icon-image" />
+              <span className="icon icon-image" />
               &nbsp;插入图片
-              </span>
-                  <input
+            </span>
+            <input
               ref={this.img_ref}
               type="file"
               accept="image/*"
               disabled={this.state.loading_status !== 'done'}
               onChange={this.on_img_change_bound}
             />
-              </label>
-                {/* 发起投票，不可在评论区发送投票*/}
-                {this.props.action === 'dopost' ? (
+          </label>
+          {/* 发起投票，不可在评论区发送投票*/}
+          {this.props.action === 'dopost' ? (
             !vote ? (
-                <button
+              <button
                 type="button"
                 onClick={() => {
                   this.setState({ vote: true, voteOptionNum: 2 });
@@ -635,7 +630,7 @@ export class PostForm extends Component {
                 &nbsp;投票
               </button>
             ) : (
-                <button
+              <button
                 type="button"
                 onClick={() => {
                   this.addVote();
@@ -646,9 +641,9 @@ export class PostForm extends Component {
               </button>
             )
           ) : (
-              <div></div>
+            <div></div>
           )}
-                {this.state.preview ? (
+          {this.state.preview ? (
             <button
               type="button"
               onClick={() => {
@@ -657,9 +652,9 @@ export class PostForm extends Component {
             >
               <span className="icon icon-eye-blocked" />
               &nbsp;编辑
-                    </button>
+            </button>
           ) : (
-              <button
+            <button
               type="button"
               onClick={() => {
                 this.toggle_preview();
@@ -670,33 +665,33 @@ export class PostForm extends Component {
             </button>
           )}
           {this.state.loading_status !== 'done' ? (
-                  <button disabled="disabled">
+            <button disabled="disabled">
               <span className="icon icon-loading" />
               &nbsp;
-                {this.state.loading_status === 'processing' ? '处理' : '上传'}
+              {this.state.loading_status === 'processing' ? '处理' : '上传'}
             </button>
           ) : (
-              <button type="submit">
-                <span className="icon icon-send" />
+            <button type="submit">
+              <span className="icon icon-send" />
               &nbsp;发表
             </button>
           )}
-            </div>
-          {!!this.state.img_tip && (
-        <p className="post-form-img-tip">
-              <a
+        </div>
+        {!!this.state.img_tip && (
+          <p className="post-form-img-tip">
+            <a
               onClick={() => {
                 this.img_ref.current.value = '';
                 this.on_img_change();
               }}
             >
-                删除图片
+              删除图片
             </a>
-              {this.state.img_tip}
+            {this.state.img_tip}
           </p>
         )}
         {this.state.preview ? (
-                <div
+          <div
             className={
               this.props.action === 'dopost' ? 'post-preview' : 'reply-preview'
             }
@@ -708,15 +703,15 @@ export class PostForm extends Component {
             />
           </div>
         ) : (
-            <SafeTextarea
+          <SafeTextarea
             ref={this.area_ref}
             id={this.props.pid}
             on_change={this.on_change_bound}
             on_submit={this.on_submit.bind(this)}
           />
         )}
-          {this.state.voteOptionNum !== 0 && (
-            <VoteEditBox
+        {this.state.voteOptionNum !== 0 && (
+          <VoteEditBox
             num={this.state.voteOptionNum}
             sendVoteData={(voteDataObj) => {
               let preVoteData = this.state.voteData;
@@ -726,25 +721,25 @@ export class PostForm extends Component {
           />
         )}
         {this.props.action === 'dopost' && (
-            <div>
-              <small>
-                发帖前请阅读并同意
+          <div>
+            <small>
+              发帖前请阅读并同意
               <a href={process.env.REACT_APP_RULES_URL} target="_blank">
-                  鼠洞规范
+                鼠洞规范
               </a>
               &nbsp;
-                <span style={{ float: 'right' }}>
+              <span style={{ float: 'right' }}>
                 <select
                   className="selectCss"
                   onChange={(e) => this.setState({ tag: e.target.value })}
                 >
-                        <option className="selectOption">可选标签</option>
-                        {tagsArrayAfter.map((tag, i) => (
+                  <option className="selectOption">可选标签</option>
+                  {tagsArrayAfter.map((tag, i) => (
                     <option className="selectOption" key={i} value={tag}>
-                                #{tag}
+                      #{tag}
                     </option>
                   ))}
-                    </select>
+                </select>
               </span>
             </small>
           </div>

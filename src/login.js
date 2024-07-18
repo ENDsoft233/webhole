@@ -313,11 +313,11 @@ class LoginPopupSelf extends Component {
           <div className="treehollow-login-popup-shadow" />
           <div className="treehollow-login-popup margin-popup">
             {this.state.phase === -1 && (
-              <>
+              <React.Fragment>
                 <p>
                   <b>使用上大邮箱来登录到{process.env.REACT_APP_TITLE}</b>
                 </p>
-              </>
+              </React.Fragment>
             )}
             <p style={this.state.phase === -1 ? {} : { display: 'none' }}>
               <label>
@@ -337,7 +337,7 @@ class LoginPopupSelf extends Component {
               </label>
             </p>
             {this.state.phase === 0 && (
-              <>
+              <React.Fragment>
                 <p>
                   <b>输入密码来登录 {process.env.REACT_APP_TITLE}</b>
                 </p>
@@ -367,10 +367,10 @@ class LoginPopupSelf extends Component {
                     忘记密码？
                   </a>
                 </p>
-              </>
+              </React.Fragment>
             )}
             {this.state.phase === 1 && (
-              <>
+              <React.Fragment>
                 <p>
                   <b>{process.env.REACT_APP_TITLE} 新用户注册</b>
                 </p>
@@ -384,17 +384,17 @@ class LoginPopupSelf extends Component {
                     />
                   </label>
                 </p>
-              </>
+              </React.Fragment>
             )}
             {this.state.phase === 2 && (
-              <>
+              <React.Fragment>
                 <p>
                   <b>{process.env.REACT_APP_TITLE} 老用户注册</b>
                 </p>
-              </>
+              </React.Fragment>
             )}
             {(this.state.phase === 1 || this.state.phase === 2) && (
-              <>
+              <React.Fragment>
                 <p>
                   <label>
                     密码&nbsp;
@@ -430,10 +430,10 @@ class LoginPopupSelf extends Component {
                     我已经了解了用户的个人信息会通过设定的密码加密，如果忘记密码会很难找回账户。
                   </label>
                 </p>
-              </>
+              </React.Fragment>
             )}
             {this.state.phase === 3 && (
-              <>
+              <React.Fragment>
                 <p>
                   <b>输入验证码 {process.env.REACT_APP_TITLE}</b>
                 </p>
@@ -461,7 +461,7 @@ class LoginPopupSelf extends Component {
                     </p>
                   )}
                 </RecaptchaV2Popup>
-              </>
+              </React.Fragment>
             )}
             <p>
               <button
@@ -504,7 +504,7 @@ export class LoginPopup extends Component {
 
   render() {
     return (
-      <>
+      <React.Fragment>
         {this.props.children(this.on_popup_bound)}
         {this.state.popup_show && (
           <LoginPopupSelf
@@ -512,7 +512,7 @@ export class LoginPopup extends Component {
             on_close={this.on_close_bound}
           />
         )}
-      </>
+      </React.Fragment>
     );
   }
 }
@@ -558,7 +558,7 @@ export class RecaptchaV2Popup extends Component {
 
   render() {
     return (
-      <>
+      <React.Fragment>
         {this.props.children(this.on_popup_bound)}
         {this.state.popup_show && (
           <div>
@@ -581,7 +581,7 @@ export class RecaptchaV2Popup extends Component {
             </div>
           </div>
         )}
-      </>
+      </React.Fragment>
     );
   }
 }

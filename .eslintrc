@@ -36,7 +36,13 @@
   ],
   "rules": {
     "prettier/prettier": "warn",
-    "react/jsx-indent": "warn",
+    "react/jsx-indent": [
+      "warn",
+      2,
+      {
+        "indentLogicalExpressions": false
+      }
+    ],
     "react/prop-types": "off",
     "react/jsx-no-target-blank": "off",
     "no-unused-vars": [

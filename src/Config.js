@@ -197,7 +197,7 @@ class ConfigColorScheme extends PureComponent {
             <option value="light">始终浅色模式</option>
             <option value="dark">始终深色模式</option>
           </select>
-          &nbsp;<small>#color_scheme</small>
+          <small>#color_scheme</small>
         </p>
         <p className="config-description">
           选择浅色或深色模式，深色模式下将会调暗图片亮度
@@ -329,8 +329,8 @@ class ConfigSwitch extends PureComponent {
               checked={this.state.switch}
               onChange={this.on_change.bind(this)}
             />
-            &nbsp;<b>{this.props.name}</b>
-            &nbsp;<small>#{this.props.id}</small>
+            <b>{this.props.name}</b>
+            <small>#{this.props.id}</small>
           </label>
         </p>
         <p className="config-description">{this.props.description}</p>
@@ -449,14 +449,6 @@ export class ConfigUI extends PureComponent {
               </div>
             </div>
           )}
-          <hr />
-          <p>
-            新功能建议或问题反馈请在&nbsp;
-            <a href={process.env.REACT_APP_GITHUB_ISSUES_URL} target="_blank">
-              GitHub <span className="icon icon-github" />
-            </a>
-            &nbsp;提出。
-          </p>
         </div>
       </div>
     );

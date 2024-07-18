@@ -274,7 +274,7 @@ export function GlobalTitle(props) {
 //
 //   render() {
 //     return (
-//       <>
+//       <React.Fragment>
 //         {this.props.children(this.on_popup_bound)}
 //         {this.state.popup_show && (
 //           <div>
@@ -297,7 +297,7 @@ export function GlobalTitle(props) {
 //             </div>
 //           </div>
 //         )}
-//       </>
+//       </React.Fragment>
 //     );
 //   }
 // }
@@ -616,7 +616,7 @@ export function GlobalTitle(props) {
 //
 //   render() {
 //     return (
-//       <>
+//       <React.Fragment>
 //         {this.props.children(this.on_popup_bound)}
 //         {this.state.popup_show && (
 //           <LoginPopupSelf
@@ -624,7 +624,7 @@ export function GlobalTitle(props) {
 //             on_close={this.on_close_bound}
 //           />
 //         )}
-//       </>
+//       </React.Fragment>
 //     );
 //   }
 // }

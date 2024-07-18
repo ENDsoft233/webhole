@@ -65,7 +65,7 @@ export class HighlightedText extends PureComponent {
                   /##
                 </span>
               ) : rule === 'url' ? (
-                <a href={normalize_url(p)} target="_blank" rel="noopener">
+                <a href="#" rel="noopener">
                   {p}
                 </a>
               ) : rule === 'pid' ? (
@@ -121,8 +121,7 @@ export class HighlightedMarkdown extends Component {
         processNode(node, children, index) {
           return (
             <a
-              href={normalize_url(node.attribs.href)}
-              target="_blank"
+              href="#"
               rel="noopenner noreferrer"
               className="ext-link"
               key={index}
@@ -169,9 +168,8 @@ export class HighlightedMarkdown extends Component {
                       </span>
                     ) : rule === 'url' ? (
                       <a
-                        href={normalize_url(p)}
+                        href="#"
                         className="ext-link"
-                        target="_blank"
                         rel="noopener noreferrer"
                       >
                         {p}
@@ -215,14 +213,14 @@ export class HighlightedMarkdown extends Component {
     ) {
       const renderedMarkdown = renderMd(props.text);
       return (
-        <>
+        <React.Fragment>
           {props.author}
           {parser.parseWithInstructions(
             renderedMarkdown,
             (node) => node.type !== 'script',
             processInstructions,
           ) || ''}
-        </>
+        </React.Fragment>
       );
     } else {
       let rawMd = props.text;
