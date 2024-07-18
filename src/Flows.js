@@ -1638,6 +1638,7 @@ export class Flow extends PureComponent {
       has_update: false,
       loading_status: 'done',
       error_msg: null,
+      loaded_callback: props.loaded_callback,
     };
     this.on_scroll_bound = this.on_scroll.bind(this);
     window.LATEST_POST_ID = parseInt(localStorage['_LATEST_POST_ID'], 10) || 0;
@@ -1646,12 +1647,14 @@ export class Flow extends PureComponent {
   load_page(page) {
     const failed = (err) => {
       console.error(err);
+      this.state.loaded_callback();
       this.setState((prev, props) => ({
         loaded_pages: prev.loaded_pages - 1,
         loading_status: 'failed',
         error_msg: '' + err,
       }));
     };
+    const loaded_callback = this.state.loaded_callback;
 
     if (page > this.state.loaded_pages + 1) throw new Error('bad page');
     if (page === this.state.loaded_pages + 1) {
@@ -1711,6 +1714,7 @@ export class Flow extends PureComponent {
                 item.variant = {};
               });
             });
+            loaded_callback();
             this.setState((prev, props) => ({
               chunks: {
                 title: '',

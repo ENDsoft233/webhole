@@ -15,6 +15,7 @@ import './App.css';
 import { SECURITY_ROOT } from './old_infrastructure/const';
 import { API_VERSION_PARAM, get_json } from './old_infrastructure/functions';
 import UAParser from 'ua-parser-js';
+import PulldownRefresh from './pulldownRefresh';
 
 const MAX_SIDEBAR_STACK_SIZE = 10;
 
@@ -42,6 +43,7 @@ class App extends Component {
       flow_render_key: +new Date(),
       token: localStorage['TOKEN'] || null,
       override_suicide: false,
+      loaded_callback: () => {},
     };
     this.show_sidebar_bound = this.show_sidebar.bind(this);
     this.set_mode_bound = this.set_mode.bind(this);
@@ -184,121 +186,133 @@ class App extends Component {
   render() {
     const wechat = sessionStorage.getItem('LOGINVIAWECHAT');
     return (
-      <TokenCtx.Provider
-        value={{
-          value: this.state.token,
-          set_value: (x) => {
-            localStorage['TOKEN'] = x || '';
+      <PulldownRefresh
+        handleRefresh={() => {
+          return new Promise((resolve) => {
+            this.set_mode('list', null);
             this.setState({
-              token: x,
+              loaded_callback: () => resolve(),
             });
-          },
+          });
         }}
       >
-        <PressureHelper callback={this.on_pressure_bound} />
-        <div className="bg-img" style={bgimg_style()} />
-        <Title
-          show_sidebar={this.show_sidebar_bound}
-          set_mode={this.set_mode_bound}
-          mode={this.state.mode}
-        />
-        <TokenCtx.Consumer>
-          {(token) => (
-            <div className="left-container">
-              <DeprecatedAlert token={token.value} />
-              {!token.value && (
-                <div className="flow-item-row aux-margin">
-                  <div className="box box-tip">
-                    <p>
-                      <LoginPopup token_callback={token.set_value}>
-                        {(do_popup) =>
-                          wechat ? (
-                            <div>
-                              <span className="icon icon-login" />
-                              &nbsp;请至公众号完成身份验证
-                            </div>
-                          ) : (
-                            <a onClick={do_popup}>
-                              <span className="icon icon-login" />
-                              &nbsp;登录到 {process.env.REACT_APP_TITLE}
-                            </a>
-                          )
-                        }
-                      </LoginPopup>
-                    </p>
-                  </div>
-                </div>
-              )}
-              {needShowSuicidePrompt(this.state.search_text) &&
-                !this.state.override_suicide && (
-                  <div className="flow-item-row">
-                    <div className="flow-item box box-tip">
-                      <p style={{ textAlign: 'left' }}>需要帮助？</p>
-                      <p style={{ textAlign: 'left' }}>
-                        北京24小时心理援助热线：
-                        <a href="tel:01082951332">010-8295-1332</a>
-                      </p>
-                      <p style={{ textAlign: 'left' }}>
-                        希望24小时热线：
-                        <a href="tel:4001619995">400-161-9995</a>
-                      </p>
-                      <hr />
+        <TokenCtx.Provider
+          value={{
+            value: this.state.token,
+            set_value: (x) => {
+              localStorage['TOKEN'] = x || '';
+              this.setState({
+                token: x,
+              });
+            },
+          }}
+        >
+          <PressureHelper callback={this.on_pressure_bound} />
+          <div className="bg-img" style={bgimg_style()} />
+          <Title
+            show_sidebar={this.show_sidebar_bound}
+            set_mode={this.set_mode_bound}
+            mode={this.state.mode}
+          />
+          <TokenCtx.Consumer>
+            {(token) => (
+              <div className="left-container">
+                <DeprecatedAlert token={token.value} />
+                {!token.value && (
+                  <div className="flow-item-row aux-margin">
+                    <div className="box box-tip">
                       <p>
-                        <button
-                          onClick={() => {
-                            window.location.href =
-                              'https://www.zhihu.com/question/25082178/answer/106073121';
-                          }}
-                        >
-                          了解更多
-                        </button>
-                        &nbsp; &nbsp; &nbsp;
-                        <button
-                          onClick={() => {
-                            this.setState({
-                              override_suicide: true,
-                            });
-                          }}
-                        >
-                          展示结果
-                        </button>
+                        <LoginPopup token_callback={token.set_value}>
+                          {(do_popup) =>
+                            wechat ? (
+                              <div>
+                                <span className="icon icon-login" />
+                                &nbsp;请至公众号完成身份验证
+                              </div>
+                            ) : (
+                              <a onClick={do_popup}>
+                                <span className="icon icon-login" />
+                                &nbsp;登录到 {process.env.REACT_APP_TITLE}
+                              </a>
+                            )
+                          }
+                        </LoginPopup>
                       </p>
                     </div>
                   </div>
                 )}
-              {this.inthu_flag || token.value ? (
-                (this.state.override_suicide ||
-                  !needShowSuicidePrompt(this.state.search_text)) && (
-                  <SwitchTransition mode="out-in">
-                    <CSSTransition
-                      key={this.state.flow_render_key}
-                      timeout={100}
-                      classNames="flows-anim"
-                    >
-                      <Flow
+                {needShowSuicidePrompt(this.state.search_text) &&
+                  !this.state.override_suicide && (
+                    <div className="flow-item-row">
+                      <div className="flow-item box box-tip">
+                        <p style={{ textAlign: 'left' }}>需要帮助？</p>
+                        <p style={{ textAlign: 'left' }}>
+                          北京24小时心理援助热线：
+                          <a href="tel:01082951332">010-8295-1332</a>
+                        </p>
+                        <p style={{ textAlign: 'left' }}>
+                          希望24小时热线：
+                          <a href="tel:4001619995">400-161-9995</a>
+                        </p>
+                        <hr />
+                        <p>
+                          <button
+                            onClick={() => {
+                              window.location.href =
+                                'https://www.zhihu.com/question/25082178/answer/106073121';
+                            }}
+                          >
+                            了解更多
+                          </button>
+                          &nbsp; &nbsp; &nbsp;
+                          <button
+                            onClick={() => {
+                              this.setState({
+                                override_suicide: true,
+                              });
+                            }}
+                          >
+                            展示结果
+                          </button>
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                {this.inthu_flag || token.value ? (
+                  (this.state.override_suicide ||
+                    !needShowSuicidePrompt(this.state.search_text)) && (
+                    <SwitchTransition mode="out-in">
+                      <CSSTransition
                         key={this.state.flow_render_key}
-                        show_sidebar={this.show_sidebar_bound}
-                        mode={this.state.mode}
-                        search_text={this.state.search_text}
-                        token={token.value}
-                      />
-                    </CSSTransition>
-                  </SwitchTransition>
-                )
-              ) : wechat ? (
-                <TitleLine text="至公众号完成身份验证后查看内容" />
-              ) : (
-                <TitleLine text="请登录后查看内容" />
-              )}
-              <br />
-            </div>
-          )}
-        </TokenCtx.Consumer>
-        <Sidebar
-          show_sidebar={this.show_sidebar_bound}
-          stack={this.state.sidebar_stack}
-        />
-      </TokenCtx.Provider>
+                        timeout={100}
+                        classNames="flows-anim"
+                      >
+                        <Flow
+                          key={this.state.flow_render_key}
+                          show_sidebar={this.show_sidebar_bound}
+                          mode={this.state.mode}
+                          search_text={this.state.search_text}
+                          token={token.value}
+                          loaded_callback={this.state.loaded_callback}
+                        />
+                      </CSSTransition>
+                    </SwitchTransition>
+                  )
+                ) : wechat ? (
+                  <TitleLine text="至公众号完成身份验证后查看内容" />
+                ) : (
+                  <TitleLine text="请登录后查看内容" />
+                )}
+                <br />
+              </div>
+            )}
+          </TokenCtx.Consumer>
+          <Sidebar
+            show_sidebar={this.show_sidebar_bound}
+            stack={this.state.sidebar_stack}
+          />
+        </TokenCtx.Provider>
+      </PulldownRefresh>
     );
   }
 }
