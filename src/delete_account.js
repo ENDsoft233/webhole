@@ -166,24 +166,24 @@ class UnregisterPopupSelf extends Component {
         reCaptchaKey={process.env.REACT_APP_RECAPTCHA_V3_KEY}
         useRecaptchaNet={true}
       >
-        <div>
+            <div>
           <div className="treehollow-login-popup-shadow" />
           <div className="treehollow-login-popup margin-popup">
-            {this.state.phase === -1 && (
+                    {this.state.phase === -1 && (
               <>
-                <p>
-                  <b>输入邮箱来注销账户/找回密码</b>
+                        <p>
+                    <b>输入邮箱来注销账户/找回密码</b>
                 </p>
-              </>
+                    </>
             )}
             <p style={this.state.phase === -1 ? {} : { display: 'none' }}>
-              <label>
-                邮箱&nbsp;
+                      <label>
+                    邮箱&nbsp;
                 <input
                   ref={this.ref.username}
                   type="email"
                   autoFocus={true}
-                  defaultValue="@mails.tsinghua.edu.cn"
+                  defaultValue="@shu.edu.cn"
                   onKeyDown={(event) => {
                     if (event.key === 'Enter') {
                       this.next_step();
@@ -191,44 +191,44 @@ class UnregisterPopupSelf extends Component {
                   }}
                 />
               </label>
-            </p>
-            {this.state.phase === 1 && (
+                  </p>
+                    {this.state.phase === 1 && (
               <>
-                <p>
+                        <p>
                   <b>{process.env.REACT_APP_TITLE} 注销账户</b>
                 </p>
-                <p>
+                        <p>
                   <label>
-                    邮箱验证码&nbsp;
+                          邮箱验证码&nbsp;
                     <input
                       ref={this.ref.email_verification}
                       type="tel"
                       autoFocus={true}
                     />
-                  </label>
+                      </label>
                 </p>
-                <p>
-                  Nonce：&nbsp;
-                  <label>
+                        <p>
+                    Nonce：&nbsp;
+                    <label>
                     <input ref={this.ref.nonce} autoFocus={true} />
                   </label>
                 </p>
-                <p>
-                  注：Nonce是注册鼠洞时欢迎邮件中的“找回密码口令”，形如xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx。
+                        <p>
+                    注：Nonce是注册鼠洞时欢迎邮件中的“找回密码口令”，形如xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx。
                 </p>
-                <p>
-                  <label>
-                    <input type="checkbox" ref={this.ref.checkbox_account} />
-                    我已经了解了注销账户后，原账户的发帖、评论将保留；注销账户后可以重新注册鼠洞，但原账户的关注列表、评论区昵称等关联数据将丢失。
+                        <p>
+                    <label>
+                      <input type="checkbox" ref={this.ref.checkbox_account} />
+                      我已经了解了注销账户后，原账户的发帖、评论将保留；注销账户后可以重新注册鼠洞，但原账户的关注列表、评论区昵称等关联数据将丢失。
                   </label>
                 </p>
               </>
             )}
             {this.state.phase === 3 && (
-              <>
-                <p>
+                  <>
+                  <p>
                   <b>输入验证码 {process.env.REACT_APP_TITLE}</b>
-                </p>
+                      </p>
                 <RecaptchaV2Popup
                   callback={() => {
                     this.verify_email('v2', () => {
@@ -236,9 +236,9 @@ class UnregisterPopupSelf extends Component {
                     });
                   }}
                 >
-                  {(do_popup) => (
-                    <p>
-                      {!this.state.recaptcha_verified && (
+                          {(do_popup) => (
+                        <p>
+                        {!this.state.recaptcha_verified && (
                         <GoogleReCaptcha
                           onVerify={(token) => {
                             this.setState({
@@ -252,21 +252,21 @@ class UnregisterPopupSelf extends Component {
                       )}
                     </p>
                   )}
-                </RecaptchaV2Popup>
+                      </RecaptchaV2Popup>
               </>
             )}
-            <p>
+                    <p>
               <button
                 onClick={this.next_step.bind(this)}
                 disabled={this.state.loading_status === 'loading'}
               >
-                下一步
+                            下一步
               </button>
               <button onClick={this.props.on_close}>取消</button>
             </p>
-          </div>
+                </div>
         </div>
-      </GoogleReCaptchaProvider>,
+        </GoogleReCaptchaProvider>,
       this.popup_anchor,
     );
   }
@@ -298,10 +298,10 @@ export class UnregisterPopup extends Component {
     return (
       <>
         {this.props.children(this.on_popup_bound)}
-        {this.state.popup_show && (
+            {this.state.popup_show && (
           <UnregisterPopupSelf on_close={this.on_close_bound} />
         )}
-      </>
+        </>
     );
   }
 }

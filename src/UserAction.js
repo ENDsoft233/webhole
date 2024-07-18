@@ -52,14 +52,15 @@ export function DoUpdate(clear_cache = true) {
 
 export function InfoSidebar(props) {
   const announcement = localStorage.getItem('announcement');
+  const wechat = sessionStorage.getItem('LOGINVIAWECHAT') === 'true';
   const color_picker = new ColorPicker();
   return (
-    <div>
-      <PromotionBar />
-      <BrowserWarningBar />
-      <LoginForm show_sidebar={props.show_sidebar} />
+      <div>
+        <PromotionBar />
+        <BrowserWarningBar />
+        <LoginForm show_sidebar={props.show_sidebar} />
       <div className="box list-menu">
-        <a href={process.env.REACT_APP_RULES_URL} target="_blank">
+              {/* <a href={process.env.REACT_APP_RULES_URL} target="_blank">
           <span className="icon icon-textfile" />
           <label>鼠洞规范</label>
         </a>
@@ -73,32 +74,29 @@ export function InfoSidebar(props) {
           <span className="icon icon-textfile" />
           <label>隐私政策</label>
         </a>
-        <br />
-        <a
+        <br /> */}
+              <a
           onClick={() => {
             props.show_sidebar('设置', <ConfigUI />);
           }}
         >
-          <span className="icon icon-settings" />
-          <label>设置</label>
+              <span className="icon icon-settings" />
+              <label>设置</label>
         </a>
-        &nbsp;&nbsp;
-        <a href={process.env.REACT_APP_GITHUB_ISSUES_URL} target="_blank">
-          <span className="icon icon-github" />
-          <label>意见反馈</label>
-        </a>
-        <br />
-        <UnregisterPopup>
-          {(do_popup) => (
-            <a onClick={do_popup}>
-              <span className="icon icon-refresh" />
-              <label>注销账户/找回密码</label>
-            </a>
-          )}
+              {!wechat && <React.Fragment>&nbsp;&nbsp;</React.Fragment>}
+        {!wechat && (
+          <UnregisterPopup>
+            {(do_popup) => (
+                <a onClick={do_popup}>
+                <span className="icon icon-refresh" />
+                  <label>注销账户/找回密码</label>
+              </a>
+            )}
         </UnregisterPopup>
-      </div>
+        )}
+          </div>
       <div className="box help-desc-box">
-        {announcement && (
+              {announcement && (
           <p>
             <strong>公告</strong>{' '}
             <HighlightedMarkdown
@@ -106,64 +104,72 @@ export function InfoSidebar(props) {
               color_picker={color_picker}
               show_pid={() => {}}
             />
-          </p>
+        </p>
         )}
-        <p>通过公众号「鼠洞 SHUer」可与我们取得联系</p>
-      </div>
+              <p>通过公众号「鼠洞 SHUer」可与我们取得联系</p>
+          </div>
       <div className="box help-desc-box">
-        <p>酷悦鼠洞由上海酷悦科技有限公司运营维护。</p>
+              <p>酷悦鼠洞由上海酷悦科技有限公司运营维护。</p>
         <p>
-          鼠洞的诞生离不开&nbsp;
+              鼠洞的诞生离不开&nbsp;
+          <a
+            href="https://github.com/thuhole/webhole"
+            target="_blank"
+            rel="noopener"
+          >
+              T大树洞
+          </a>
+              、
           <a
             href="https://github.com/pkuhelper-web/webhole"
             target="_blank"
             rel="noopener"
           >
-            P大鼠洞网页版 by @xmcp
+              P大鼠洞
           </a>
-          、
+              、
           <a href="https://reactjs.org/" target="_blank" rel="noopener">
-            React
+              React
           </a>
-          、
+              、
           <a href="https://icomoon.io/#icons" target="_blank" rel="noopener">
-            IcoMoon
+              IcoMoon
           </a>
           &nbsp;等开源项目
-        </p>
-        <p>
-          本项目也基于&nbsp;
+          </p>
+              <p>
+            本项目也基于&nbsp;
           <a
             href="https://www.gnu.org/licenses/gpl-3.0.zh-cn.html"
             target="_blank"
           >
-            GPLv3
+              GPLv3
           </a>
           &nbsp;协议在{' '}
-          <a href={process.env.REACT_APP_GITHUB_WEB_URL} target="_blank">
-            GitHub
+            <a href={process.env.REACT_APP_GITHUB_WEB_URL} target="_blank">
+                      GitHub
           </a>{' '}
-          开源
+            开源
         </p>
-        <p>
-          This program is free software: you can redistribute it and/or modify
-          it under the terms of the GNU General Public License as published by
-          the Free Software Foundation, either version 3 of the License, or (at
-          your option) any later version.
+              <p>
+            This program is free software: you can redistribute it and/or modify
+            it under the terms of the GNU General Public License as published by
+            the Free Software Foundation, either version 3 of the License, or (at
+            your option) any later version.
         </p>
-        <p>
-          This program is distributed in the hope that it will be useful, but
-          WITHOUT ANY WARRANTY; without even the implied warranty of
-          MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the&nbsp;
+              <p>
+            This program is distributed in the hope that it will be useful, but
+            WITHOUT ANY WARRANTY; without even the implied warranty of
+            MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the&nbsp;
           <a
             href="https://www.gnu.org/licenses/gpl-3.0.zh-cn.html"
             target="_blank"
           >
-            GNU General Public License
+              GNU General Public License
           </a>
           &nbsp;for more details.
         </p>
-      </div>
+          </div>
     </div>
   );
 }
@@ -179,84 +185,104 @@ export class LoginForm extends Component {
   // }
 
   render() {
+    const wechat = sessionStorage.getItem('LOGINVIAWECHAT') === 'true';
     return (
-      <TokenCtx.Consumer>
-        {(token) => (
-          <div>
-            <div className="login-form box">
-              {token.value ? (
+        <TokenCtx.Consumer>
+          {(token) => (
                 <div>
-                  <p>
-                    <b>您已登录。</b>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        fetch(SECURITY_ROOT + 'logout?' + API_VERSION_PARAM(), {
-                          method: 'POST',
-                          headers: {
-                            TOKEN: token.value,
-                          },
-                        })
-                          .then(get_json)
-                          .then((json) => {
-                            if (json.code !== 0) throw new Error(json.msg);
-                            token.set_value(null);
-                          })
-                          .catch((err) => {
-                            console.error(err);
-                            alert('' + err);
-                            token.set_value(null);
-                          });
-                      }}
-                    >
-                      <span className="icon icon-logout" /> 注销
-                    </button>
+            <div className="login-form box">
+                        {token.value ? (
+                <div>
+                                <p>
+                      <b>已通过微信登录</b>
+                    {!wechat && (
+                                    <button
+                        type="button"
+                        onClick={() => {
+                          fetch(
+                            SECURITY_ROOT + 'logout?' + API_VERSION_PARAM(),
+                            {
+                              method: 'POST',
+                              headers: {
+                                TOKEN: token.value,
+                              },
+                            },
+                          )
+                            .then(get_json)
+                            .then((json) => {
+                              if (json.code !== 0) throw new Error(json.msg);
+                              token.set_value(null);
+                            })
+                            .catch((err) => {
+                              console.error(err);
+                              alert('' + err);
+                              token.set_value(null);
+                            });
+                        }}
+                      >
+                          <span className="icon icon-logout" /> 注销
+                      </button>
+                    )}
                     <br />
                   </p>
                   <p>
-                    <a
+                        <a
                       onClick={() => {
                         this.props.show_sidebar(
                           '系统消息',
-                          <MessageViewer token={token.value} />,
+                            <MessageViewer token={token.value} />,
                         );
                       }}
                     >
-                      查看系统消息
+                        查看系统消息
                     </a>
                     <br />
-                    当您发送的内容违规时，我们将用系统消息提示您
+                        当您发送的内容违规时
+                    <br />
+                        我们将用系统消息提示您
                   </p>
-                  {/*<p>*/}
-                  {/*  <a onClick={this.copy_token.bind(this, token.value)}>*/}
+                                {/*<p>*/}
+                                {/*  <a onClick={this.copy_token.bind(this, token.value)}>*/}
                   {/*    复制 User Token*/}
                   {/*  </a>*/}
-                  {/*  <br />*/}
-                  {/*  复制 User Token*/}
-                  {/*  可以在新设备登录，切勿告知他人。若怀疑被盗号请重新邮箱验证码登录以重置Token。*/}
+                                {/*  <br />*/}
+                                {/*  复制 User Token*/}
+                                {/*  可以在新设备登录，切勿告知他人。若怀疑被盗号请重新邮箱验证码登录以重置Token。*/}
                   {/*</p>*/}
-                </div>
+                            </div>
               ) : (
-                <LoginPopup token_callback={token.set_value}>
-                  {(do_popup) => (
-                    <div>
-                      <p>
-                        <button type="button" onClick={do_popup}>
-                          <span className="icon icon-login" />
-                          &nbsp;登录/注册
-                        </button>
-                      </p>
-                      <p>
+                  <LoginPopup token_callback={token.set_value}>
+                    {(do_popup) =>
+                    wechat ? (
+                        <div>
                         <small>
-                          {process.env.REACT_APP_TITLE}
-                          面向上海大学校内用户，请使用校园邮箱登录（我们将在之后支持更多验证方式）
-                        </small>
-                      </p>
-                    </div>
-                  )}
+                                鼠洞面向上海大学校内用户
+                            <br />
+                                请按照流程关注公众号验证身份后登录
+                          </small>
+                      </div>
+                    ) : (
+                        <div>
+                        <p>
+                                <button type="button" onClick={do_popup}>
+                              <span className="icon icon-login" />
+                            &nbsp;登录/注册
+                          </button>
+                        </p>
+                          <p>
+                          <small>
+                                {process.env.REACT_APP_TITLE}
+                                面向上海大学校内用户
+                              <br />
+                                请使用校园邮箱注册登录
+                            </small>
+                            </p>
+                      </div>
+                    )
+                  }
                 </LoginPopup>
               )}
-            </div>
+                    </div>
           </div>
         )}
       </TokenCtx.Consumer>
@@ -280,7 +306,7 @@ export class VoteEditBox extends Component {
     const inputPile = [];
     for (let i = 0; i < num; i += 1) {
       inputPile.push(
-        <input
+          <input
           key={i}
           maxLength="15"
           style={{ padding: '0 2px', margin: '2px 2px' }}
@@ -292,10 +318,10 @@ export class VoteEditBox extends Component {
       );
     }
     return (
-      <div>
-        <hr />
-        <p>设置2~4个选项，每项不超过15字符</p>
-        {inputPile}
+        <div>
+          <hr />
+          <p>设置2~4个选项，每项不超过15字符</p>
+          {inputPile}
       </div>
     );
   }
@@ -318,9 +344,8 @@ export class PostForm extends Component {
     this.area_ref = this.props.area_ref || React.createRef();
     this.on_change_bound = this.on_change.bind(this);
     this.on_img_change_bound = this.on_img_change.bind(this);
-    this.global_keypress_handler_bound = this.global_keypress_handler.bind(
-      this,
-    );
+    this.global_keypress_handler_bound =
+      this.global_keypress_handler.bind(this);
     this.color_picker = new ColorPicker();
   }
 
@@ -577,20 +602,20 @@ export class PostForm extends Component {
       'reply-form box' + (this.state.text ? ' reply-sticky' : '');
     let tagsArrayAfter = process.env.REACT_APP_SENDABLE_TAGS.split(',');
     return (
-      <form
+        <form
         onSubmit={this.on_submit.bind(this)}
         className={
           this.props.action === 'dopost' ? 'post-form box' : replyClassName
         }
       >
-        <div className="post-form-bar">
-          <label>
+          <div className="post-form-bar">
+                <label>
             {/*<a>上传图片</a>*/}
-            <span className={'post-upload'}>
-              <span className="icon icon-image" />
+              <span className={'post-upload'}>
+                <span className="icon icon-image" />
               &nbsp;插入图片
             </span>
-            <input
+              <input
               ref={this.img_ref}
               type="file"
               accept="image/*"
@@ -599,19 +624,19 @@ export class PostForm extends Component {
             />
           </label>
           {/* 发起投票，不可在评论区发送投票*/}
-          {this.props.action === 'dopost' ? (
+                {this.props.action === 'dopost' ? (
             !vote ? (
-              <button
+                <button
                 type="button"
                 onClick={() => {
                   this.setState({ vote: true, voteOptionNum: 2 });
                 }}
               >
-                <span className="icon icon-how_to_vote" />
+                  <span className="icon icon-how_to_vote" />
                 &nbsp;投票
               </button>
             ) : (
-              <button
+                <button
                 type="button"
                 onClick={() => {
                   this.addVote();
@@ -622,45 +647,45 @@ export class PostForm extends Component {
               </button>
             )
           ) : (
-            <div></div>
+              <div></div>
           )}
-          {this.state.preview ? (
-            <button
+                {this.state.preview ? (
+              <button
               type="button"
               onClick={() => {
                 this.toggle_preview();
               }}
             >
-              <span className="icon icon-eye-blocked" />
+                <span className="icon icon-eye-blocked" />
               &nbsp;编辑
             </button>
           ) : (
-            <button
+              <button
               type="button"
               onClick={() => {
                 this.toggle_preview();
               }}
             >
-              <span className="icon icon-eye" />
+                <span className="icon icon-eye" />
               &nbsp;预览
             </button>
           )}
           {this.state.loading_status !== 'done' ? (
-            <button disabled="disabled">
+                  <button disabled="disabled">
               <span className="icon icon-loading" />
               &nbsp;
-              {this.state.loading_status === 'processing' ? '处理' : '上传'}
+                {this.state.loading_status === 'processing' ? '处理' : '上传'}
             </button>
           ) : (
-            <button type="submit">
-              <span className="icon icon-send" />
+              <button type="submit">
+                <span className="icon icon-send" />
               &nbsp;发表
             </button>
           )}
         </div>
-        {!!this.state.img_tip && (
-          <p className="post-form-img-tip">
-            <a
+          {!!this.state.img_tip && (
+            <p className="post-form-img-tip">
+              <a
               onClick={() => {
                 this.img_ref.current.value = '';
                 this.on_img_change();
@@ -668,7 +693,7 @@ export class PostForm extends Component {
             >
               删除图片
             </a>
-            {this.state.img_tip}
+              {this.state.img_tip}
           </p>
         )}
         {this.state.preview ? (
@@ -677,14 +702,14 @@ export class PostForm extends Component {
               this.props.action === 'dopost' ? 'post-preview' : 'reply-preview'
             }
           >
-            <HighlightedMarkdown
+                <HighlightedMarkdown
               text={this.state.text}
               color_picker={this.color_picker}
               show_pid={() => {}}
             />
-          </div>
+            </div>
         ) : (
-          <SafeTextarea
+            <SafeTextarea
             ref={this.area_ref}
             id={this.props.pid}
             on_change={this.on_change_bound}
@@ -692,7 +717,7 @@ export class PostForm extends Component {
           />
         )}
         {this.state.voteOptionNum !== 0 && (
-          <VoteEditBox
+            <VoteEditBox
             num={this.state.voteOptionNum}
             sendVoteData={(voteDataObj) => {
               let preVoteData = this.state.voteData;
@@ -701,28 +726,28 @@ export class PostForm extends Component {
             }}
           />
         )}
-        {this.props.action === 'dopost' && (
-          <div>
-            <small>
-              发帖前请阅读并同意
+          {this.props.action === 'dopost' && (
+        <div>
+              <small>
+                    发帖前请阅读并同意
               <a href={process.env.REACT_APP_RULES_URL} target="_blank">
-                鼠洞规范
+                  鼠洞规范
               </a>
               &nbsp;
-              <span style={{ float: 'right' }}>
-                <select
+                    <span style={{ float: 'right' }}>
+                  <select
                   className="selectCss"
                   onChange={(e) => this.setState({ tag: e.target.value })}
                 >
                   <option className="selectOption">可选标签</option>
-                  {tagsArrayAfter.map((tag, i) => (
-                    <option className="selectOption" key={i} value={tag}>
-                      #{tag}
+                            {tagsArrayAfter.map((tag, i) => (
+                          <option className="selectOption" key={i} value={tag}>
+                        #{tag}
                     </option>
                   ))}
-                </select>
+                        </select>
               </span>
-            </small>
+                </small>
           </div>
         )}
       </form>

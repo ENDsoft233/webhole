@@ -56,6 +56,7 @@ class App extends Component {
       ) !== -1;
     if (this.state.code) {
       // 尝试使用微信登录
+      sessionStorage.setItem('LOGINVIAWECHAT', 'true');
       const device_info = UAParser(navigator.userAgent).browser.name;
       const body = new URLSearchParams();
       Object.entries({
@@ -73,7 +74,8 @@ class App extends Component {
             if (json.msg) console.log(json.msg);
             console.log(JSON.stringify(json));
           } else {
-            this.state.token = json.token;
+            localStorage.setItem('TOKEN', json.token);
+            location.pathname = '/';
           }
         })
         .catch((e) => {
@@ -147,6 +149,7 @@ class App extends Component {
   }
 
   render() {
+    const wechat = sessionStorage.getItem('LOGINVIAWECHAT');
     return (
         <TokenCtx.Provider
         value={{
@@ -169,20 +172,27 @@ class App extends Component {
           <TokenCtx.Consumer>
             {(token) => (
                   <div className="left-container">
-              <DeprecatedAlert token={token.value} />
-                {!token.value && (
+                <DeprecatedAlert token={token.value} />
+              {!token.value && (
                       <div className="flow-item-row aux-margin">
                     <div className="box box-tip">
-                    <p>
-                                    <LoginPopup token_callback={token.set_value}>
-                        {(do_popup) => (
-                                            <a onClick={do_popup}>
-                            <span className="icon icon-login" />
-                            &nbsp;登录到 {process.env.REACT_APP_TITLE}
-                          </a>
-                        )}
-                      </LoginPopup>
-                                </p>
+                      <p>
+                      <LoginPopup token_callback={token.set_value}>
+                            {(do_popup) =>
+                          wechat ? (
+                              <div>
+                                <span className="icon icon-login" />
+                              &nbsp;请至公众号完成身份验证
+                            </div>
+                          ) : (
+                              <a onClick={do_popup}>
+                              <span className="icon icon-login" />
+                              &nbsp;登录到 {process.env.REACT_APP_TITLE}
+                            </a>
+                          )
+                        }
+                        </LoginPopup>
+                        </p>
                   </div>
                 </div>
               )}
@@ -195,35 +205,35 @@ class App extends Component {
                           北京24小时心理援助热线：
                         <a href="tel:01082951332">010-8295-1332</a>
                       </p>
-                          <p style={{ textAlign: 'left' }}>
+                      <p style={{ textAlign: 'left' }}>
                             希望24小时热线：
                         <a href="tel:4001619995">400-161-9995</a>
                         </p>
                           <hr />
-                      <p>
-                            <button
+                          <p>
+                        <button
                           onClick={() => {
                             window.location.href =
                               'https://www.zhihu.com/question/25082178/answer/106073121';
                           }}
                         >
-                            了解更多
+                                  了解更多
                         </button>
                         &nbsp; &nbsp; &nbsp;
-                            <button
+                        <button
                           onClick={() => {
                             this.setState({
                               override_suicide: true,
                             });
                           }}
                         >
-                            展示结果
+                                  展示结果
                         </button>
-                        </p>
+                      </p>
                       </div>
                 </div>
                 )}
-              {this.inthu_flag || token.value ? (
+                {this.inthu_flag || token.value ? (
                 (this.state.override_suicide ||
                   !needShowSuicidePrompt(this.state.search_text)) && (
                   <SwitchTransition mode="out-in">
@@ -242,10 +252,12 @@ class App extends Component {
                     </CSSTransition>
                   </SwitchTransition>
                 )
+              ) : wechat ? (
+                  <TitleLine text="至公众号完成身份验证后查看内容" />
               ) : (
                   <TitleLine text="请登录后查看内容" />
               )}
-                <br />
+              <br />
             </div>
           )}
         </TokenCtx.Consumer>
