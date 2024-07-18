@@ -86,18 +86,18 @@ export function InfoSidebar(props) {
               {!wechat && <React.Fragment>&nbsp;&nbsp;</React.Fragment>}
         {!wechat && (
           <UnregisterPopup>
-            {(do_popup) => (
-                <a onClick={do_popup}>
-                <span className="icon icon-refresh" />
-                  <label>注销账户/找回密码</label>
-              </a>
+              {(do_popup) => (
+              <a onClick={do_popup}>
+                          <span className="icon icon-refresh" />
+                          <label>注销账户/找回密码</label>
+                      </a>
             )}
-        </UnregisterPopup>
+          </UnregisterPopup>
         )}
           </div>
-      <div className="box help-desc-box">
-              {announcement && (
-          <p>
+        <div className="box help-desc-box">
+        {announcement && (
+            <p>
             <strong>公告</strong>{' '}
             <HighlightedMarkdown
               text={announcement}
@@ -106,12 +106,12 @@ export function InfoSidebar(props) {
             />
         </p>
         )}
-              <p>通过公众号「鼠洞 SHUer」可与我们取得联系</p>
-          </div>
-      <div className="box help-desc-box">
-              <p>酷悦鼠洞由上海酷悦科技有限公司运营维护。</p>
-        <p>
-              鼠洞的诞生离不开&nbsp;
+          <p>通过公众号「鼠洞 SHUer」可与我们取得联系</p>
+      </div>
+        <div className="box help-desc-box">
+          <p>酷悦鼠洞由上海酷悦科技有限公司运营维护。</p>
+          <p>
+                鼠洞的诞生离不开&nbsp;
           <a
             href="https://github.com/thuhole/webhole"
             target="_blank"
@@ -119,7 +119,7 @@ export function InfoSidebar(props) {
           >
               T大树洞
           </a>
-              、
+                、
           <a
             href="https://github.com/pkuhelper-web/webhole"
             target="_blank"
@@ -127,17 +127,17 @@ export function InfoSidebar(props) {
           >
               P大鼠洞
           </a>
-              、
+                、
           <a href="https://reactjs.org/" target="_blank" rel="noopener">
               React
           </a>
-              、
+                、
           <a href="https://icomoon.io/#icons" target="_blank" rel="noopener">
               IcoMoon
           </a>
           &nbsp;等开源项目
-          </p>
-              <p>
+        </p>
+          <p>
             本项目也基于&nbsp;
           <a
             href="https://www.gnu.org/licenses/gpl-3.0.zh-cn.html"
@@ -147,20 +147,20 @@ export function InfoSidebar(props) {
           </a>
           &nbsp;协议在{' '}
             <a href={process.env.REACT_APP_GITHUB_WEB_URL} target="_blank">
-                      GitHub
+              GitHub
           </a>{' '}
             开源
         </p>
-              <p>
-            This program is free software: you can redistribute it and/or modify
-            it under the terms of the GNU General Public License as published by
-            the Free Software Foundation, either version 3 of the License, or (at
-            your option) any later version.
+        <p>
+                This program is free software: you can redistribute it and/or modify
+                it under the terms of the GNU General Public License as published by
+                the Free Software Foundation, either version 3 of the License, or (at
+                your option) any later version.
         </p>
-              <p>
-            This program is distributed in the hope that it will be useful, but
-            WITHOUT ANY WARRANTY; without even the implied warranty of
-            MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the&nbsp;
+          <p>
+                This program is distributed in the hope that it will be useful, but
+                WITHOUT ANY WARRANTY; without even the implied warranty of
+                MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the&nbsp;
           <a
             href="https://www.gnu.org/licenses/gpl-3.0.zh-cn.html"
             target="_blank"
@@ -168,8 +168,8 @@ export function InfoSidebar(props) {
               GNU General Public License
           </a>
           &nbsp;for more details.
-        </p>
-          </div>
+            </p>
+      </div>
     </div>
   );
 }
@@ -190,13 +190,12 @@ export class LoginForm extends Component {
         <TokenCtx.Consumer>
           {(token) => (
                 <div>
-            <div className="login-form box">
-                        {token.value ? (
-                <div>
-                                <p>
-                      <b>已通过微信登录</b>
-                    {!wechat && (
-                                    <button
+              <div className="login-form box">
+                {token.value ? (
+                      <div>
+                  <p>
+                        {wechat ? (<b>已通过微信登录</b>) : (
+                              <button
                         type="button"
                         onClick={() => {
                           fetch(
@@ -220,11 +219,11 @@ export class LoginForm extends Component {
                             });
                         }}
                       >
-                          <span className="icon icon-logout" /> 注销
-                      </button>
+                                    <span className="icon icon-logout" /> 注销
+                                </button>
                     )}
-                    <br />
-                  </p>
+                        <br />
+                    </p>
                   <p>
                         <a
                       onClick={() => {
@@ -236,53 +235,53 @@ export class LoginForm extends Component {
                     >
                         查看系统消息
                     </a>
-                    <br />
+                        <br />
                         当您发送的内容违规时
                     <br />
                         我们将用系统消息提示您
                   </p>
-                                {/*<p>*/}
-                                {/*  <a onClick={this.copy_token.bind(this, token.value)}>*/}
+                  {/*<p>*/}
+                      {/*  <a onClick={this.copy_token.bind(this, token.value)}>*/}
                   {/*    复制 User Token*/}
-                  {/*  </a>*/}
-                                {/*  <br />*/}
-                                {/*  复制 User Token*/}
-                                {/*  可以在新设备登录，切勿告知他人。若怀疑被盗号请重新邮箱验证码登录以重置Token。*/}
+                      {/*  </a>*/}
+                      {/*  <br />*/}
+                  {/*  复制 User Token*/}
+                      {/*  可以在新设备登录，切勿告知他人。若怀疑被盗号请重新邮箱验证码登录以重置Token。*/}
                   {/*</p>*/}
-                            </div>
+                  </div>
               ) : (
                   <LoginPopup token_callback={token.set_value}>
-                    {(do_popup) =>
+                  {(do_popup) =>
                     wechat ? (
                         <div>
-                        <small>
-                                鼠洞面向上海大学校内用户
+                          <small>
+                            鼠洞面向上海大学校内用户
                             <br />
-                                请按照流程关注公众号验证身份后登录
+                            请按照流程关注公众号验证身份后登录
                           </small>
                       </div>
                     ) : (
                         <div>
                         <p>
-                                <button type="button" onClick={do_popup}>
-                              <span className="icon icon-login" />
+                          <button type="button" onClick={do_popup}>
+                                <span className="icon icon-login" />
                             &nbsp;登录/注册
                           </button>
-                        </p>
-                          <p>
-                          <small>
-                                {process.env.REACT_APP_TITLE}
-                                面向上海大学校内用户
-                              <br />
-                                请使用校园邮箱注册登录
-                            </small>
                             </p>
+                          <p>
+                            <small>
+                            {process.env.REACT_APP_TITLE}
+                                  面向上海大学校内用户
+                              <br />
+                                  请使用校园邮箱注册登录
+                            </small>
+                        </p>
                       </div>
                     )
                   }
                 </LoginPopup>
               )}
-                    </div>
+            </div>
           </div>
         )}
       </TokenCtx.Consumer>
@@ -609,21 +608,21 @@ export class PostForm extends Component {
         }
       >
           <div className="post-form-bar">
-                <label>
-            {/*<a>上传图片</a>*/}
-              <span className={'post-upload'}>
-                <span className="icon icon-image" />
+          <label>
+                  {/*<a>上传图片</a>*/}
+            <span className={'post-upload'}>
+                  <span className="icon icon-image" />
               &nbsp;插入图片
-            </span>
-              <input
+              </span>
+                  <input
               ref={this.img_ref}
               type="file"
               accept="image/*"
               disabled={this.state.loading_status !== 'done'}
               onChange={this.on_img_change_bound}
             />
-          </label>
-          {/* 发起投票，不可在评论区发送投票*/}
+              </label>
+                {/* 发起投票，不可在评论区发送投票*/}
                 {this.props.action === 'dopost' ? (
             !vote ? (
                 <button
@@ -632,7 +631,7 @@ export class PostForm extends Component {
                   this.setState({ vote: true, voteOptionNum: 2 });
                 }}
               >
-                  <span className="icon icon-how_to_vote" />
+                <span className="icon icon-how_to_vote" />
                 &nbsp;投票
               </button>
             ) : (
@@ -650,15 +649,15 @@ export class PostForm extends Component {
               <div></div>
           )}
                 {this.state.preview ? (
-              <button
+            <button
               type="button"
               onClick={() => {
                 this.toggle_preview();
               }}
             >
-                <span className="icon icon-eye-blocked" />
+              <span className="icon icon-eye-blocked" />
               &nbsp;编辑
-            </button>
+                    </button>
           ) : (
               <button
               type="button"
@@ -666,7 +665,7 @@ export class PostForm extends Component {
                 this.toggle_preview();
               }}
             >
-                <span className="icon icon-eye" />
+              <span className="icon icon-eye" />
               &nbsp;预览
             </button>
           )}
@@ -682,32 +681,32 @@ export class PostForm extends Component {
               &nbsp;发表
             </button>
           )}
-        </div>
+            </div>
           {!!this.state.img_tip && (
-            <p className="post-form-img-tip">
+        <p className="post-form-img-tip">
               <a
               onClick={() => {
                 this.img_ref.current.value = '';
                 this.on_img_change();
               }}
             >
-              删除图片
+                删除图片
             </a>
               {this.state.img_tip}
           </p>
         )}
         {this.state.preview ? (
-          <div
+                <div
             className={
               this.props.action === 'dopost' ? 'post-preview' : 'reply-preview'
             }
           >
-                <HighlightedMarkdown
+            <HighlightedMarkdown
               text={this.state.text}
               color_picker={this.color_picker}
               show_pid={() => {}}
             />
-            </div>
+          </div>
         ) : (
             <SafeTextarea
             ref={this.area_ref}
@@ -716,7 +715,7 @@ export class PostForm extends Component {
             on_submit={this.on_submit.bind(this)}
           />
         )}
-        {this.state.voteOptionNum !== 0 && (
+          {this.state.voteOptionNum !== 0 && (
             <VoteEditBox
             num={this.state.voteOptionNum}
             sendVoteData={(voteDataObj) => {
@@ -726,28 +725,28 @@ export class PostForm extends Component {
             }}
           />
         )}
-          {this.props.action === 'dopost' && (
-        <div>
+        {this.props.action === 'dopost' && (
+            <div>
               <small>
-                    发帖前请阅读并同意
+                发帖前请阅读并同意
               <a href={process.env.REACT_APP_RULES_URL} target="_blank">
                   鼠洞规范
               </a>
               &nbsp;
-                    <span style={{ float: 'right' }}>
-                  <select
+                <span style={{ float: 'right' }}>
+                <select
                   className="selectCss"
                   onChange={(e) => this.setState({ tag: e.target.value })}
                 >
-                  <option className="selectOption">可选标签</option>
-                            {tagsArrayAfter.map((tag, i) => (
-                          <option className="selectOption" key={i} value={tag}>
-                        #{tag}
+                        <option className="selectOption">可选标签</option>
+                        {tagsArrayAfter.map((tag, i) => (
+                    <option className="selectOption" key={i} value={tag}>
+                                #{tag}
                     </option>
                   ))}
-                        </select>
+                    </select>
               </span>
-                </small>
+            </small>
           </div>
         )}
       </form>
