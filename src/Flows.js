@@ -176,7 +176,7 @@ export function load_single_meta(show_sidebar, token) {
               >
                         重新加载
               </a>
-            </p>
+              </p>
             <p>{'' + e}</p>
             </div>,
           'replace',
@@ -250,20 +250,20 @@ class Reply extends PureComponent {
           />
         )}
             <div className="box-content">
-              <HighlightedMarkdown
+          <HighlightedMarkdown
             author={author}
             text={replyText}
             search_param={this.props.search_param}
             color_picker={this.props.color_picker}
             show_pid={this.props.show_pid}
           />
-              {this.props.info.type === 'image' && (
-            <ImageViewer
+            {this.props.info.type === 'image' && (
+          <ImageViewer
               in_sidebar={this.props.in_sidebar}
               url={this.props.info.url}
             />
           )}
-          </div>
+        </div>
         </div>
     );
   }
@@ -278,13 +278,13 @@ function ReportWidget(props) {
     let id = props.is_reply ? props.info.cid : props.info.pid;
 
     let report_type_str = {
-      fold: '举报折叠',
+      fold: '举报要求折叠',
       delete: '删除',
       undelete_unban: '撤销删除',
       delete_ban: '删帖禁言',
       unban: '解封',
       set_tag: '打tag',
-      report: '举报删除',
+      report: '举报要求删除',
     }[report_type];
     let item_type_str = { post: '鼠洞', comment: '评论' }[item_type];
 
@@ -295,7 +295,7 @@ function ReportWidget(props) {
         if (reason === 'select') return;
         if (
           !window.confirm(
-            `确认因为 ${reason} 举报折叠 ${item_type_str} #${id} 吗？`,
+            `确认要因为 ${reason} 要求折叠 ${item_type_str} #${id} 吗？`,
           )
         )
           return;
@@ -320,7 +320,7 @@ function ReportWidget(props) {
         if (!reason) return;
         if (
           !window.confirm(
-            `确认因为 ${reason} 的理由 ${report_type_str} ${item_type_str} #${id} 吗？`,
+            `确认因为理由 ${reason} ${report_type_str} ${item_type_str} #${id} 吗？`,
           )
         )
           return;
@@ -348,7 +348,7 @@ function ReportWidget(props) {
               value={fold_reason}
               onChange={(e) => set_fold_reason(e.target.value)}
             >
-                  <option value="select">选择理由……</option>
+              <option value="select">选择理由……</option>
               {process.env.REACT_APP_REPORTABLE_TAGS.split(',').map(
                 (tag, i) => (
                   <option key={i} value={tag}>
@@ -366,8 +366,8 @@ function ReportWidget(props) {
             <button onClick={() => report('report')}>删除</button>
             <span className="report-reason">
                   这条{props.is_reply ? '回复' : '鼠洞'}违反
-                  <a href={process.env.REACT_APP_RULES_URL} target="_blank">
-                  社区规范
+              <a href={process.env.REACT_APP_RULES_URL} target="_blank">
+                    社区规范
               </a>
                   ，应被禁止
             </span>
@@ -377,29 +377,29 @@ function ReportWidget(props) {
         <p>
               <button onClick={() => report('delete')}>
             {props.info.permissions.includes('delete_ban') ? '删除' : '撤回'}
-          </button>
+            </button>
               <span className="report-reason">
             {props.info.permissions.includes('delete_ban')
               ? '没有禁言惩罚的删除。'
               : '鼠洞发送两分钟内可以撤回，不会禁言。'}
-          </span>
+            </span>
           </p>
       )}
           {props.info.permissions.includes('undelete_unban') && (
         <p>
               <button onClick={() => report('undelete_unban')}>撤销删除</button>
-          <span className="report-reason">
+              <span className="report-reason">
                 撤销删除并解除禁言（如果存在禁言的话）
           </span>
           </p>
       )}
-      {props.info.permissions.includes('delete_ban') && (
+          {props.info.permissions.includes('delete_ban') && (
         <p>
           <button onClick={() => report('delete_ban')}>删帖禁言</button>
-          <span className="report-reason">
+              <span className="report-reason">
                 删除并禁言。删除理由会通知用户。
           </span>
-      </p>
+          </p>
       )}
           {props.info.permissions.includes('unban') && (
         <p>
@@ -409,20 +409,20 @@ function ReportWidget(props) {
       )}
           {props.info.permissions.includes('set_tag') && (
         <p>
-          <button onClick={() => report('set_tag')}>打tag</button>
-          <select
+              <button onClick={() => report('set_tag')}>打tag</button>
+              <select
             value={tag_text}
             onChange={(e) => set_tag_text(e.target.value)}
           >
-                <option value="select">选择理由……</option>
+              <option value="select">选择理由……</option>
             {process.env.REACT_APP_REPORTABLE_TAGS.split(',').map((tag, i) => (
-              <option key={i} value={tag}>
-                    #{tag}
-                </option>
+                      <option key={i} value={tag}>
+                  #{tag}
+              </option>
             ))}
-                <option value="">无tag</option>
+            <option value="">无tag</option>
             <option value="others">其他</option>
-            </select>
+          </select>
           </p>
       )}
       </div>
@@ -562,18 +562,18 @@ class VoteShowBox extends PureComponent {
                     fontSize: voteSingle.length > 18 ? '12px' : '14px',
                   }}
                 >
-                  {voteSingle}
+                          {voteSingle}
                       </p>
-                  <p
+                <p
                   className="p-voteDataShow-right"
                   style={{
                     right: '0.5em',
                     fontSize: eachNums[index] > 999 ? '12px' : '14px',
                   }}
                 >
-                  {eachNums[index]}
-                </p>
-                <span className="liu_area"></span>
+                          {eachNums[index]}
+                      </p>
+                  <span className="liu_area"></span>
               </div>
               </div>
           ) : (
@@ -586,27 +586,27 @@ class VoteShowBox extends PureComponent {
                   display: eachNums[index] == 0 ? 'none' : 'inline',
                 }}
               ></div>
-              <div className="div-text">
-                    <p
+                  <div className="div-text">
+                <p
                   className="p-voteDataShow"
                   style={{
                     left: '0.5em',
                     fontSize: voteSingle.length > 18 ? '12px' : '14px',
                   }}
                 >
-                  {voteSingle}
-                </p>
-                <p
+                          {voteSingle}
+                      </p>
+                    <p
                   className="p-voteDataShow-right"
                   style={{
                     right: '0.5em',
                     fontSize: eachNums[index] > 999 ? '12px' : '14px',
                   }}
                 >
-                  {eachNums[index]}
-                      </p>
+                    {eachNums[index]}
+                </p>
                     <span className="liu_area"></span>
-                </div>
+              </div>
               </div>
           ),
         );
@@ -622,7 +622,7 @@ class VoteShowBox extends PureComponent {
               this.sendVoteOption(event.target.innerText);
             }}
           >
-            {voteSingle}
+                {voteSingle}
             </button>,
         );
       });
@@ -635,7 +635,7 @@ class VoteShowBox extends PureComponent {
         <hr />
             <div className="voteGroupPanel">
           {alreadyVote ? <div>{resultPile}</div> : <div>{buttonPile}</div>}
-          </div>
+        </div>
         </div>
     );
   }
@@ -686,71 +686,71 @@ class FlowItem extends PureComponent {
             {!!props.is_quote && (
           <div className="quote-tip black-outline">
             <div>
-              <span className="icon icon-quote" />
+                  <span className="icon icon-quote" />
+              </div>
             </div>
-        </div>
         )}
             <div className="box">
-            {!!window.LATEST_POST_ID && props.info.pid > window.LATEST_POST_ID ? (
+              {!!window.LATEST_POST_ID && props.info.pid > window.LATEST_POST_ID ? (
             <div className="flow-item-dot flow-item-dot-post" />
           ) : props.info.variant.new_reply ? (
             <div className="flow-item-dot flow-item-dot-comment" />
           ) : null}
-          <div className="box-header">
-                    {props.header_badges}
-                    <code className="box-id">
-              <a
+              <div className="box-header">
+                {props.header_badges}
+            <code className="box-id">
+                      <a
                 href={'##' + props.info.pid}
                 onClick={this.copy_link.bind(this)}
               >
-                    #{props.info.pid}
-                </a>
-              </code>
+                  #{props.info.pid}
+              </a>
+                  </code>
             &nbsp;
-            {props.info.tag !== null && (
-              <span className="box-header-tag">{props.info.tag}</span>
+                {props.info.tag !== null && (
+            <span className="box-header-tag">{props.info.tag}</span>
             )}
-            <Time stamp={props.info.timestamp} short={!props.in_sidebar} />
-                </div>
+                <Time stamp={props.info.timestamp} short={!props.in_sidebar} />
+          </div>
           {props.info.deleted && (
             <p key="deleted-hint" className="flow-variant-warning">
               （已删除）
-            </p>
+          </p>
           )}
-            {props.info.variant.report_widget && props.in_sidebar && (
-          <ReportWidget
+              {props.info.variant.report_widget && props.in_sidebar && (
+            <ReportWidget
               key="report"
               info={props.info}
               is_reply={false}
               set_variant={props.set_variant}
             />
           )}
-          <div className="box-content">
-                    <HighlightedMarkdown
+              <div className="box-content">
+              <HighlightedMarkdown
               text={props.info.text}
               color_picker={props.color_picker}
               search_param={props.search_param}
               show_pid={props.show_pid}
             />
-                    {props.info.type === 'image' && (
-            <ImageViewer in_sidebar={props.in_sidebar} url={props.info.url} />
+            {props.info.type === 'image' && (
+                  <ImageViewer in_sidebar={props.in_sidebar} url={props.info.url} />
             )}
-                </div>
-          {voteOptionNum !== 0 && (
-                <VoteShowBox
+          </div>
+              {voteOptionNum !== 0 && (
+            <VoteShowBox
               voteOptions={props.info.vote}
               // voteOptions={{vote_data:{第一个选项:300,第二个选项第二个选项:200,第三个选项第三个选项第三个选项:400,第四个选项第四个选项第四个选项:1000},voted:"第四个选项第四个选项第四个选项"}}
               pid={props.info.pid}
               token={this.props.token}
             />
           )}
-            {!!(props.attention && props.info.variant.latest_reply) && (
-                <p className="box-footer">
-                最新回复{' '}
-              <Time stamp={props.info.variant.latest_reply} short={false} />
-            </p>
+              {!!(props.attention && props.info.variant.latest_reply) && (
+            <p className="box-footer">
+                  最新回复{' '}
+                  <Time stamp={props.info.variant.latest_reply} short={false} />
+              </p>
           )}
-        </div>
+          </div>
         </div>
     );
   }
@@ -976,10 +976,10 @@ class FlowSidebar extends PureComponent {
                       }}
                     >
                           <span className="icon icon-flag" />
-                      <label>取消</label>
+                          <label>取消</label>
                       </span>
                   ))}
-                {replies_cnt[DZ_NAME] > 1 && (
+                    {replies_cnt[DZ_NAME] > 1 && (
                   <span
                     className="reply-header-badge clickable"
                     onClick={() => {
@@ -1000,21 +1000,21 @@ class FlowSidebar extends PureComponent {
       <div className="flow-item-row sidebar-flow-item">
             <div className="box box-tip">
           <a onClick={this.load_replies.bind(this)}>
-                <span className="icon icon-refresh" />
-            <label>刷新</label>
-            </a>
-              {(this.state.replies.length >= 1 || this.state.rev) && (
-            <span>
+            <span className="icon icon-refresh" />
+                    <label>刷新</label>
+                </a>
+          {(this.state.replies.length >= 1 || this.state.rev) && (
+                <span>
               &nbsp;&nbsp;
               <a onClick={this.toggle_rev.bind(this)}>
-                    <span
+                        <span
                   className={
                     'icon icon-order-rev' + (this.state.rev ? '-down' : '')
                   }
                 />
-                    <label>{this.state.info.reply} 回复</label>
-                </a>
-          </span>
+                        <label>{this.state.info.reply} 回复</label>
+                    </a>
+            </span>
           )}
           &nbsp;&nbsp;
           <a
@@ -1022,16 +1022,16 @@ class FlowSidebar extends PureComponent {
               this.toggle_attention();
             }}
           >
-                <span>
-                <span
+            <span>
+                  <span
                 className={
                   'icon icon-star' + (this.state.info.attention ? '-ok' : '')
                 }
               />
               <label>{this.state.info.likenum} 关注</label>
-            </span>
-            </a>
-          </div>
+              </span>
+                </a>
+        </div>
             {!!this.state.filter_name && (
           <div className="box box-tip flow-item filter-name-bar">
                 <p>
@@ -1041,27 +1041,27 @@ class FlowSidebar extends PureComponent {
                     this.set_filter_name(null);
                   }}
                 >
-                          还原
+                        还原
                 </a>
               </span>
-                  <span className="icon icon-locate" />
+              <span className="icon icon-locate" />
               &nbsp;当前只看&nbsp;
-                  <ColoredSpan
+              <ColoredSpan
                 colors={this.color_picker.get(this.state.filter_name)}
               >
-                {this.state.filter_name}
-              </ColoredSpan>
+                        {this.state.filter_name}
+                    </ColoredSpan>
             </p>
             </div>
         )}
             {!this.state.rev && main_thread_elem}
-            {!!this.state.error_msg && (
+        {!!this.state.error_msg && (
           <div className="box box-tip flow-item">
-                <p>回复加载失败</p>
-            <p>{this.state.error_msg}</p>
+            <p>回复加载失败</p>
+                <p>{this.state.error_msg}</p>
             </div>
         )}
-            {replies_to_show.map((reply, i) => (
+        {replies_to_show.map((reply, i) => (
           <LazyLoad
             key={i}
             offset={1500}
@@ -1069,12 +1069,12 @@ class FlowSidebar extends PureComponent {
             overflow={true}
             once={true}
           >
-            <ClickHandler
+                    <ClickHandler
               callback={(e) => {
                 this.show_reply_bar(reply.name, reply.cid, e);
               }}
             >
-                  <Reply
+              <Reply
                 info={reply}
                 color_picker={this.color_picker}
                 show_pid={show_pid}
@@ -1106,7 +1106,7 @@ class FlowSidebar extends PureComponent {
                             });
                           }}
                         >
-                              <span className="icon icon-flag" />
+                          <span className="icon icon-flag" />
                               <label>取消</label>
                           </span>
                       ))}
@@ -1117,17 +1117,17 @@ class FlowSidebar extends PureComponent {
                           this.set_filter_name(reply.name);
                         }}
                       >
-                            <span className="icon icon-locate" />
+                        <span className="icon icon-locate" />
                         {/*<label>只看</label>*/}
                         </span>
                     )}
                     </>
                 }
               />
-              </ClickHandler>
+            </ClickHandler>
                 </LazyLoad>
         ))}
-            {this.state.rev && main_thread_elem}
+        {this.state.rev && main_thread_elem}
             {this.props.token ? (
           <PostForm
             pid={this.state.info.pid}
@@ -1149,14 +1149,14 @@ class FlowSidebar extends PureComponent {
   render() {
     return (
       <SwitchTransition mode="out-in">
-        <CSSTransition
+            <CSSTransition
           key={this.state.loading_status}
           timeout={100}
           classNames="flows-anim"
           appear={true}
         >
-          {this.render_self()}
-          </CSSTransition>
+            {this.render_self()}
+        </CSSTransition>
         </SwitchTransition>
     );
   }
@@ -1394,7 +1394,7 @@ class FlowItemRow extends PureComponent {
           }
         }}
       >
-            <FlowItem
+        <FlowItem
           info={this.state.info}
           in_sidebar={false}
           is_quote={this.props.is_quote}
@@ -1406,16 +1406,16 @@ class FlowItemRow extends PureComponent {
           token={this.props.token}
           header_badges={
             <>
-                  {!!this.state.info.likenum && (
+              {!!this.state.info.likenum && (
                 <span className="box-header-badge">
-                      {this.state.info.likenum}&nbsp;
+                  {this.state.info.likenum}&nbsp;
                   <span
                     className={
                       'icon icon-' +
                       (this.state.info.attention ? 'star-ok' : 'star')
                     }
                   />
-                  </span>
+              </span>
               )}
                   {!!this.state.info.reply && (
                 <span className="box-header-badge">
@@ -1430,7 +1430,7 @@ class FlowItemRow extends PureComponent {
             {this.state.reply_status === 'loading' && (
           <div className="box box-tip">加载中</div>
           )}
-          {this.state.reply_status === 'failed' && (
+            {this.state.reply_status === 'failed' && (
                 <div className="box box-tip">
                 <p>
                 <a
@@ -1438,9 +1438,9 @@ class FlowItemRow extends PureComponent {
                     this.load_replies();
                   }}
                 >
-                      重新加载评论
+                        重新加载评论
                 </a>
-                    </p>
+              </p>
                 <p>{this.state.reply_error}</p>
             </div>
           )}
@@ -1469,30 +1469,30 @@ class FlowItemRow extends PureComponent {
             }
           >
             {!!this.props.is_quote && (
-              <div className="quote-tip black-outline">
-                <div>
-                          <span className="icon icon-quote" />
-                      </div>
-                {/*<div>*/}
-                {/*  <small>提到</small>*/}
-                {/*</div>*/}
+                  <div className="quote-tip black-outline">
+                  <div>
+                  <span className="icon icon-quote" />
+                </div>
+                  {/*<div>*/}
+                  {/*  <small>提到</small>*/}
+                  {/*</div>*/}
               </div>
             )}
             <div className="box">
               <div className="box-header">
-                      <code className="box-id">#{this.props.info.pid}</code>
+                <code className="box-id">#{this.props.info.pid}</code>
                 &nbsp;
-                {this.props.info.tag !== null && (
+                    {this.props.info.tag !== null && (
                   <span className="box-header-tag">{this.props.info.tag}</span>
                 )}
-                      <Time stamp={this.props.info.timestamp} short={true} />
+                    <Time stamp={this.props.info.timestamp} short={true} />
                 <span className="box-header-badge">
-                  {this.needFold ? '已隐藏' : '已屏蔽'}
-                  </span>
-                      <div style={{ clear: 'both' }} />
+                      {this.needFold ? '已隐藏' : '已屏蔽'}
+                </span>
+                <div style={{ clear: 'both' }} />
+                </div>
                   </div>
-                  </div>
-          </div>
+            </div>
           </div>
       );
     }
@@ -1500,7 +1500,7 @@ class FlowItemRow extends PureComponent {
     return quote_id ? (
       <div>
         {res}
-        <FlowItemQuote
+            <FlowItemQuote
           pid={quote_id}
           show_sidebar={this.props.show_sidebar}
           token={this.props.token}
@@ -1571,10 +1571,10 @@ class FlowItemQuote extends PureComponent {
       return (
         <div className="aux-margin">
           <div className="box box-tip">
-                <p>
-              <a onClick={this.load.bind(this)}>重新加载</a>
+            <p>
+                  <a onClick={this.load.bind(this)}>重新加载</a>
               </p>
-                <p>{this.state.error_msg}</p>
+            <p>{this.state.error_msg}</p>
             </div>
           </div>
       );
@@ -1598,7 +1598,7 @@ function FlowChunk(props) {
   return (
     <TokenCtx.Consumer>
       {({ value: token }) => (
-        <div className="flow-chunk">
+            <div className="flow-chunk">
           {!!props.title && <TitleLine text={props.title} />}
               {props.list.map((info, ind) => (
             <LazyLoad
@@ -1607,7 +1607,7 @@ function FlowChunk(props) {
               height="15em"
               hiddenIfInvisible={false}
             >
-                  <div>
+                      <div>
                 <FlowItemRow
                   info={info}
                   show_sidebar={props.show_sidebar}
@@ -1616,7 +1616,7 @@ function FlowChunk(props) {
                   color_picker={null}
                 />
               </div>
-              </LazyLoad>
+                  </LazyLoad>
           ))}
         </div>
       )}
@@ -1889,7 +1889,7 @@ export class Flow extends PureComponent {
           <div className="box flow-item box-warning">
                     <p>检测到更新，正在更新鼠洞...</p>
                     <p>
-                <a onClick={DoUpdate}>[强制更新]</a>
+                  <a onClick={DoUpdate}>[强制更新]</a>
             </p>
                 </div>
         ) : (
@@ -1917,7 +1917,7 @@ export class Flow extends PureComponent {
               </div>
             </div>
         )}
-        <TitleLine
+            <TitleLine
           text={
             this.state.loading_status === 'loading' ? (
               <span>
