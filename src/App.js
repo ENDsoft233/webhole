@@ -74,7 +74,7 @@ class App extends Component {
             console.log(JSON.stringify(json));
           } else {
             localStorage.setItem('TOKEN', json.token);
-            location.pathname = '/';
+            location.href = '/';
           }
         })
         .catch((e) => {
@@ -108,7 +108,7 @@ class App extends Component {
             console.log(JSON.stringify(json));
           } else {
             localStorage.setItem('TOKEN', json.token);
-            location.pathname = '/';
+            location.href = '/';
           }
         })
         .catch((e) => {
@@ -202,16 +202,16 @@ class App extends Component {
           set_mode={this.set_mode_bound}
           mode={this.state.mode}
         />
-          <TokenCtx.Consumer>
+        <TokenCtx.Consumer>
           {(token) => (
                   <div className="left-container">
                 <DeprecatedAlert token={token.value} />
-                {!token.value && (
-              <div className="flow-item-row aux-margin">
+              {!token.value && (
+                <div className="flow-item-row aux-margin">
                   <div className="box box-tip">
                         <p>
                       <LoginPopup token_callback={token.set_value}>
-                                {(do_popup) =>
+                        {(do_popup) =>
                           wechat ? (
                               <div>
                                 <span className="icon icon-login" />
@@ -224,33 +224,33 @@ class App extends Component {
                             </a>
                           )
                         }
-                            </LoginPopup>
+                          </LoginPopup>
                     </p>
                     </div>
-                </div>
+              </div>
               )}
               {needShowSuicidePrompt(this.state.search_text) &&
                 !this.state.override_suicide && (
                   <div className="flow-item-row">
                     <div className="flow-item box box-tip">
-                          <p style={{ textAlign: 'left' }}>需要帮助？</p>
+                      <p style={{ textAlign: 'left' }}>需要帮助？</p>
                           <p style={{ textAlign: 'left' }}>
-                            北京24小时心理援助热线：
+                          北京24小时心理援助热线：
                         <a href="tel:01082951332">010-8295-1332</a>
                       </p>
-                          <p style={{ textAlign: 'left' }}>
-                          希望24小时热线：
+                      <p style={{ textAlign: 'left' }}>
+                            希望24小时热线：
                         <a href="tel:4001619995">400-161-9995</a>
-                      </p>
-                          <hr />
+                        </p>
+                      <hr />
                       <p>
-                            <button
+                        <button
                           onClick={() => {
                             window.location.href =
                               'https://www.zhihu.com/question/25082178/answer/106073121';
                           }}
                         >
-                            了解更多
+                              了解更多
                         </button>
                         &nbsp; &nbsp; &nbsp;
                         <button
@@ -266,7 +266,7 @@ class App extends Component {
                       </div>
                 </div>
                 )}
-                {this.inthu_flag || token.value ? (
+              {this.inthu_flag || token.value ? (
                 (this.state.override_suicide ||
                   !needShowSuicidePrompt(this.state.search_text)) && (
                   <SwitchTransition mode="out-in">
@@ -290,7 +290,7 @@ class App extends Component {
               ) : (
                   <TitleLine text="请登录后查看内容" />
               )}
-                <br />
+              <br />
             </div>
           )}
         </TokenCtx.Consumer>
