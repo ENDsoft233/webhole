@@ -112,34 +112,27 @@ export function InfoSidebar(props) {
         <p>酷悦鼠洞由上海酷悦科技有限公司运营维护。</p>
         <p>
           鼠洞的诞生离不开&nbsp;
-          <a href="https://github.com/thuhole/webhole" disabled rel="noopener">
+          <a href="#https://github.com/thuhole/webhole" rel="noopener">
             T大树洞
           </a>
           、
-          <a
-            href="https://github.com/pkuhelper-web/webhole"
-            disabled
-            rel="noopener"
-          >
+          <a href="#https://github.com/pkuhelper-web/webhole" rel="noopener">
             P大鼠洞
           </a>
           、
-          <a href="https://reactjs.org/" disabled rel="noopener">
+          <a href="#https://reactjs.org/" rel="noopener">
             React
           </a>
           、
-          <a href="https://icomoon.io/#icons" disabled rel="noopener">
+          <a href="#https://icomoon.io/#icons" rel="noopener">
             IcoMoon
           </a>
           &nbsp;等开源项目
         </p>
         <p>
           本项目也基于&nbsp;
-          <a href="https://www.gnu.org/licenses/gpl-3.0.zh-cn.html" disabled>
-            GPLv3
-          </a>
-          &nbsp;协议在{' '}
-          <a href={process.env.REACT_APP_GITHUB_WEB_URL} disabled>
+          <a href="#https://www.gnu.org/licenses/gpl-3.0.zh-cn.html">GPLv3</a>
+          &nbsp;协议在 <a href={process.env.REACT_APP_GITHUB_WEB_URL}>
             GitHub
           </a>{' '}
           开源
@@ -154,10 +147,7 @@ export function InfoSidebar(props) {
           This program is distributed in the hope that it will be useful, but
           WITHOUT ANY WARRANTY; without even the implied warranty of
           MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the&nbsp;
-          <a
-            href="https://www.gnu.org/licenses/gpl-3.0.zh-cn.html"
-            target="_blank"
-          >
+          <a href="#https://www.gnu.org/licenses/gpl-3.0.zh-cn.html">
             GNU General Public License
           </a>
           &nbsp;for more details.
@@ -724,9 +714,7 @@ export class PostForm extends Component {
           <div>
             <small>
               发帖前请阅读并同意
-              <a href={process.env.REACT_APP_RULES_URL} target="_blank">
-                鼠洞规范
-              </a>
+              <a href={process.env.REACT_APP_RULES_URL}>鼠洞规范</a>
               &nbsp;
               <span style={{ float: 'right' }}>
                 <select
