@@ -198,6 +198,12 @@ class App extends Component {
           }
         });
     }
+
+    window.addEventListener('message', (e) => {
+      if (e.data.origin === 'https://charging.shuhole.cn') {
+        window.chargingSource = e.source;
+      }
+    });
   }
 
   static is_darkmode() {
@@ -231,7 +237,9 @@ class App extends Component {
         link: 'https://web.shuhole.cn/',
         imgUrl: 'https://static.r-ay.cn/shuhole.png',
       });
-      location.hash = '';
+      window.chargingSource.postMessage({
+        type: 'close',
+      });
     } else {
       const thread_id = title.split('#')[1];
       wx.updateTimelineShareData({
@@ -247,7 +255,11 @@ class App extends Component {
         link: 'https://web.shuhole.cn/##' + thread_id,
         imgUrl: 'https://static.r-ay.cn/shuhole.png',
       });
-      location.hash = '##' + thread_id;
+      window.chargingSource.postMessage({
+        type: 'thread',
+        id: thread_id,
+        info,
+      });
     }
     this.setState((prevState) => {
       let ns = prevState.sidebar_stack.slice();
