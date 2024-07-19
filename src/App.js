@@ -231,11 +231,7 @@ class App extends Component {
         link: 'https://web.shuhole.cn/',
         imgUrl: 'https://static.r-ay.cn/shuhole.png',
       });
-      wx.miniProgram.postMessage({
-        data: {
-          type: 'shuhole-index',
-        },
-      });
+      location.hash = '';
     } else {
       const thread_id = title.split('#')[1];
       wx.updateTimelineShareData({
@@ -251,13 +247,7 @@ class App extends Component {
         link: 'https://web.shuhole.cn/##' + thread_id,
         imgUrl: 'https://static.r-ay.cn/shuhole.png',
       });
-      wx.miniProgram.postMessage({
-        data: {
-          type: 'shuhole-thread',
-          id: thread_id,
-          info: info,
-        },
-      });
+      location.hash = '##' + thread_id;
     }
     this.setState((prevState) => {
       let ns = prevState.sidebar_stack.slice();
