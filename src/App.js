@@ -172,7 +172,6 @@ class App extends Component {
               jsApiList: [
                 'updateAppMessageShareData',
                 'updateTimelineShareData',
-                'postMessage',
               ],
             });
             wx.ready(function () {
@@ -238,12 +237,13 @@ class App extends Component {
         link: 'https://web.shuhole.cn/',
         imgUrl: 'https://static.r-ay.cn/shuhole.png',
       });
-      window.chargingSource.postMessage(
-        {
-          type: 'close',
-        },
-        'https://charging.shuhole.cn',
-      );
+      if (window.chargingSource)
+        window.chargingSource.postMessage(
+          {
+            type: 'close',
+          },
+          'https://charging.shuhole.cn',
+        );
     } else {
       const thread_id = title.split('#')[1];
       wx.updateTimelineShareData({
@@ -259,14 +259,15 @@ class App extends Component {
         link: 'https://web.shuhole.cn/##' + thread_id,
         imgUrl: 'https://static.r-ay.cn/shuhole.png',
       });
-      window.chargingSource.postMessage(
-        {
-          type: 'thread',
-          id: thread_id,
-          info,
-        },
-        'https://charging.shuhole.cn',
-      );
+      if (window.chargingSource)
+        window.chargingSource.postMessage(
+          {
+            type: 'thread',
+            id: thread_id,
+            info,
+          },
+          'https://charging.shuhole.cn',
+        );
     }
     this.setState((prevState) => {
       let ns = prevState.sidebar_stack.slice();
