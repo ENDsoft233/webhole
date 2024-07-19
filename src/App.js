@@ -151,6 +151,21 @@ class App extends Component {
           console.error(e);
         });
     }
+
+    if (navigator.userAgent.toLowerCase().indexOf('micromessenger') !== -1) {
+      sessionStorage.setItem('LOGINVIAWECHAT', 'true');
+      fetch('https://charging-api.ruivon.cn/v1/wxsign', {
+        method: 'post',
+        body: {
+          url: window.location.href,
+        },
+      })
+        .then(get_json)
+        .then((json) => {
+          console.log('wechat sign', json);
+          if (json.code === 0) sessionStorage.setItem('wechat_sign', json.data);
+        });
+    }
   }
 
   static is_darkmode() {
