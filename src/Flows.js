@@ -1272,6 +1272,8 @@ class FlowItemRow extends PureComponent {
         color_picker={this.color_picker}
         freshFirst={freshFirst}
       />,
+      'push',
+      this.state.info,
     );
   }
 

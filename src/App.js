@@ -163,7 +163,37 @@ class App extends Component {
         .then(get_json)
         .then((json) => {
           console.log('wechat sign', json);
-          if (json.code === 0) sessionStorage.setItem('wechat_sign', json.data);
+          if (json.code === 0) {
+            wx.config({
+              debug: false,
+              ...json.data,
+              jsApiList: [
+                'updateAppMessageShareData',
+                'updateTimelineShareData',
+                'postMessage',
+              ],
+            });
+            wx.ready(function () {
+              sessionStorage.setItem('wechatReady', 'true');
+              wx.miniProgram.getEnv(function (res) {
+                if (res.miniprogram) {
+                  console.log('in miniprogram');
+                  sessionStorage.setItem('miniprogram', 'true');
+                }
+              });
+              wx.updateTimelineShareData({
+                title: '鼠洞 | 一起来和鼠鼠们分享新鲜事',
+                link: 'https://web.shuhole.cn/',
+                imgUrl: 'https://static.r-ay.cn/shuhole.png',
+              });
+              wx.updateAppMessageShareData({
+                title: '一起来和鼠鼠们分享新鲜事',
+                desc: '在鼠洞，畅所欲言。',
+                link: 'https://web.shuhole.cn/',
+                imgUrl: 'https://static.r-ay.cn/shuhole.png',
+              });
+            });
+          }
         });
     }
   }
@@ -186,7 +216,47 @@ class App extends Component {
     else this.set_mode('list', null);
   }
 
-  show_sidebar(title, content, mode = 'push') {
+  show_sidebar(title, content, mode = 'push', info = {}) {
+    if (!(title && title.includes('#'))) {
+      wx.updateTimelineShareData({
+        title: '鼠洞 | 一起来和鼠鼠们分享新鲜事',
+        link: 'https://web.shuhole.cn/',
+        imgUrl: 'https://static.r-ay.cn/shuhole.png',
+      });
+      wx.updateAppMessageShareData({
+        title: '一起来和鼠鼠们分享新鲜事',
+        desc: '在鼠洞，畅所欲言。',
+        link: 'https://web.shuhole.cn/',
+        imgUrl: 'https://static.r-ay.cn/shuhole.png',
+      });
+      wx.miniProgram.postMessage({
+        data: {
+          type: 'shuhole-index',
+        },
+      });
+    } else {
+      const thread_id = title.split('#')[1];
+      wx.updateTimelineShareData({
+        title: info.text
+          ? `鼠洞 #${thread_id} : ${info.text}`
+          : `鼠洞 #${thread_id} | 一起来和鼠鼠们分享新鲜事`,
+        link: 'https://web.shuhole.cn/##' + thread_id,
+        imgUrl: 'https://static.r-ay.cn/shuhole.png',
+      });
+      wx.updateAppMessageShareData({
+        title: `鼠洞 #${thread_id} | 一起来和鼠鼠们分享新鲜事`,
+        desc: `#${thread_id}: ${info.text || '在鼠洞，畅所欲言。'}`,
+        link: 'https://web.shuhole.cn/##' + thread_id,
+        imgUrl: 'https://static.r-ay.cn/shuhole.png',
+      });
+      wx.miniProgram.postMessage({
+        data: {
+          type: 'shuhole-thread',
+          id: thread_id,
+          info: info,
+        },
+      });
+    }
     this.setState((prevState) => {
       let ns = prevState.sidebar_stack.slice();
       if (mode === 'push') {
