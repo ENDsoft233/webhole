@@ -347,6 +347,7 @@ class App extends Component {
             set_mode={this.set_mode_bound}
             mode={this.state.mode}
           />
+          <div style={{ width: '100%', height: '60px' }} />
           <TokenCtx.Consumer>
             {(token) => (
               <div className="left-container">
