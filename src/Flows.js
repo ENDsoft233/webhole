@@ -810,6 +810,7 @@ class FlowSidebar extends PureComponent {
       loading_status: 'loading',
       error_msg: null,
     });
+    window.startRefresh();
     API.load_replies(this.state.info.pid, this.props.token, this.color_picker)
       .then((json) => {
         this.setState(
@@ -820,6 +821,7 @@ class FlowSidebar extends PureComponent {
             error_msg: null,
           },
           () => {
+            window.stopRefresh();
             this.syncState({
               replies: json.data,
               info: json.post,
@@ -841,6 +843,7 @@ class FlowSidebar extends PureComponent {
           loading_status: 'done',
           error_msg: '' + e,
         });
+        window.stopRefresh();
       });
   }
 
@@ -848,6 +851,7 @@ class FlowSidebar extends PureComponent {
     this.setState({
       loading_status: 'loading',
     });
+    window.startRefresh();
     const next_attention = !this.state.info.attention;
     API.set_attention(this.state.info.pid, next_attention, this.props.token)
       .then((json) => {
@@ -864,6 +868,7 @@ class FlowSidebar extends PureComponent {
           loading_status: 'done',
           info: json.data,
         });
+        window.stopRefresh();
         this.syncState({
           info: json.data,
         });
@@ -872,6 +877,7 @@ class FlowSidebar extends PureComponent {
         this.setState({
           loading_status: 'done',
         });
+        window.stopRefresh();
         alert('设置关注失败');
         console.error(e);
       });
@@ -911,9 +917,6 @@ class FlowSidebar extends PureComponent {
   }
 
   render_self() {
-    if (this.state.loading_status === 'loading')
-      return <p className="box box-tip">加载中……</p>;
-
     let show_pid = load_single_meta(this.props.show_sidebar, this.props.token);
 
     let replies_to_show = this.state.filter_name
@@ -1154,7 +1157,7 @@ class FlowSidebar extends PureComponent {
           classNames="flows-anim"
           appear={true}
         >
-          {this.render_self()}
+          {this.state.loading_status === 'done' ? this.render_self() : <div />}
         </CSSTransition>
       </SwitchTransition>
     );
@@ -1530,6 +1533,7 @@ class FlowItemQuote extends PureComponent {
   }
 
   load() {
+    window.startRefresh();
     this.setState(
       {
         loading_status: 'loading',
@@ -1541,17 +1545,21 @@ class FlowItemQuote extends PureComponent {
               loading_status: 'done',
               info: json,
             });
+            window.stopRefresh();
           })
           .catch((err) => {
-            if (('' + err).indexOf('找不到这条鼠洞') !== -1)
+            if (('' + err).indexOf('找不到这条鼠洞') !== -1) {
               this.setState({
                 loading_status: 'empty',
               });
-            else
+              window.stopRefresh();
+            } else {
               this.setState({
                 loading_status: 'error',
                 error_msg: '' + err,
               });
+              window.stopRefresh();
+            }
           });
       },
     );
@@ -1650,6 +1658,7 @@ export class Flow extends PureComponent {
     const failed = (err) => {
       console.error(err);
       this.state.loaded_callback();
+      window.stopRefresh();
       this.setState((prev, props) => ({
         loaded_pages: prev.loaded_pages - 1,
         loading_status: 'failed',
@@ -1716,7 +1725,6 @@ export class Flow extends PureComponent {
                 item.variant = {};
               });
             });
-            loaded_callback();
             this.setState((prev, props) => ({
               chunks: {
                 title: '',
@@ -1735,6 +1743,8 @@ export class Flow extends PureComponent {
               mode: finished ? 'list_finished' : 'list',
               loading_status: 'done',
             }));
+            loaded_callback();
+            window.stopRefresh();
           })
           .catch(failed);
       } else if (this.state.mode === 'search') {
@@ -1771,6 +1781,8 @@ export class Flow extends PureComponent {
               mode: finished ? 'search_finished' : 'search',
               loading_status: 'done',
             }));
+            loaded_callback();
+            window.stopRefresh();
           })
           .catch(failed);
       } else if (this.state.mode === 'single') {
@@ -1785,6 +1797,8 @@ export class Flow extends PureComponent {
               mode: 'single_finished',
               loading_status: 'done',
             });
+            loaded_callback();
+            window.stopRefresh();
           })
           .catch(failed);
       } else if (this.state.mode === 'attention') {
@@ -1810,6 +1824,8 @@ export class Flow extends PureComponent {
                 mode: finished ? 'attention_finished' : 'attention',
                 loading_status: 'done',
               }));
+              loaded_callback();
+              window.stopRefresh();
             })
             .catch(failed);
         } else {
@@ -1832,6 +1848,8 @@ export class Flow extends PureComponent {
                 mode: finished ? 'attention_finished' : 'attention',
                 loading_status: 'done',
               }));
+              loaded_callback();
+              window.stopRefresh();
             })
             .catch(failed);
         }
@@ -1845,6 +1863,7 @@ export class Flow extends PureComponent {
         loading_status: 'loading',
         error_msg: null,
       }));
+      window.startRefresh();
     }
   }
 
@@ -1923,18 +1942,6 @@ export class Flow extends PureComponent {
             </div>
           </div>
         )}
-        <TitleLine
-          text={
-            this.state.loading_status === 'loading' ? (
-              <span>
-                <span className="icon icon-loading" />
-                &nbsp;Loading...
-              </span>
-            ) : (
-              process.env.REACT_APP_COPYRIGHT_STRING
-            )
-          }
-        />
       </div>
     );
   }

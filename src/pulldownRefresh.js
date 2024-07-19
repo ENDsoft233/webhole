@@ -34,23 +34,36 @@ export default function PulldownRefresh(props) {
       e.preventDefault();
     }
   };
+  const startRefresh = () => {
+    isPullingRef.current = true;
+    setIsPulling(true);
+    loadingRef.current = true;
+    setLoading(true);
+    animationRef.current = true;
+    setAnimation(true);
+  };
+  const stopRefresh = () => {
+    isPullingRef.current = false;
+    setIsPulling(false);
+    loadingRef.current = false;
+    setLoading(false);
+    setTimeout(() => {
+      animationRef.current = false;
+      setAnimation(false);
+    }, 500);
+  };
+  window.startRefresh = startRefresh;
+  window.stopRefresh = stopRefresh;
+  const doRefresh = (func) => {
+    startRefresh();
+    func().then(() => {
+      stopRefresh();
+    });
+  };
   const handleTouchEnd = () => {
     validStart.current = false;
     if (isPullingRef.current && endYRef.current - startYRef.current > 60) {
-      loadingRef.current = true;
-      setLoading(true);
-      animationRef.current = true;
-      setAnimation(true);
-      handleRefresh().then(() => {
-        isPullingRef.current = false;
-        setIsPulling(false);
-        loadingRef.current = false;
-        setLoading(false);
-        setTimeout(() => {
-          animationRef.current = false;
-          setAnimation(false);
-        }, 500);
-      });
+      doRefresh(handleRefresh);
     } else if (isPullingRef.current) {
       animationRef.current = true;
       setAnimation(true);

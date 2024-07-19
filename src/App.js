@@ -312,7 +312,7 @@ class App extends Component {
         test={this.state.sidebar_stack}
         handleRefresh={() => {
           return new Promise((resolve) => {
-            this.set_mode('list', null);
+            this.set_mode(this.state.mode, this.state.search_text);
             this.setState({
               loaded_callback: () => resolve(),
             });
