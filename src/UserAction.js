@@ -110,12 +110,10 @@ export function InfoSidebar(props) {
         <p>通过公众号「鼠洞 SHUer」可与我们取得联系</p>
       </div>
       <div className="box help-desc-box">
-        <p>
-          <strong>客户端版本 {process.env.REACT_APP_BUILD_INFO}</strong>{' '}
+        <small>
+          <strong>客户端版本</strong> {process.env.REACT_APP_BUILD_INFO}{' '}
           <a onClick={DoUpdate}>强制检查更新</a>
-        </p>
-      </div>
-      <div className="box help-desc-box">
+        </small>
         <p>酷悦鼠洞由上海酷悦科技有限公司运营维护。</p>
         <p>
           鼠洞的诞生离不开&nbsp;
