@@ -1818,7 +1818,7 @@ export class Flow extends PureComponent {
               const finished = json.data.length === 0;
               this.setState((prev, props) => ({
                 chunks: {
-                  title: 'Attention List',
+                  title: '关注的洞洞们',
                   data: prev.chunks.data.concat(
                     json.data.filter(
                       (x) =>
