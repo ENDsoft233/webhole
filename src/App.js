@@ -50,16 +50,18 @@ class App extends Component {
     this.set_mode_bound = this.set_mode.bind(this);
     this.on_pressure_bound = this.on_pressure.bind(this);
 
-    if (!this.state.token) {
-      fetch(SECURITY_ROOT + 'login/subnet_check?' + API_VERSION_PARAM(), {
-        method: 'get',
-      })
-        .then(get_json)
-        .then((json) => {
-          this.inshu_flag = json.code === 0;
-          this.set_mode('list', null);
-        });
-    }
+    /* 推广期间保持公网可见 */
+    // if (!this.state.token) {
+    //   fetch(SECURITY_ROOT + 'login/subnet_check?' + API_VERSION_PARAM(), {
+    //     method: 'get',
+    //   })
+    //     .then(get_json)
+    //     .then((json) => {
+    //       this.inshu_flag = json.code === 0;
+    //       this.set_mode('list', null);
+    //     });
+    // }
+    this.inshu_flag = true;
 
     if (
       new URLSearchParams(window.location.search).get('access_token') ||
