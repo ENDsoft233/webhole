@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import { bgimg_style } from './Config';
 import './Sidebar.css';
 
 export class Sidebar extends PureComponent {
@@ -49,7 +50,9 @@ export class Sidebar extends PureComponent {
             e.preventDefault();
             e.target.click();
           }}
-        />
+        >
+          <div className="sidebar-shadow-inner" style={bgimg_style()} />
+        </div>
         <div className="sidebar">{contents}</div>
         <div className="sidebar-title">
           <a className="no-underline" onClick={this.do_close_bound}>
@@ -64,7 +67,7 @@ export class Sidebar extends PureComponent {
               &nbsp;
             </a>
           )}
-          {cur_title}
+          <span>{cur_title}</span>
         </div>
       </div>
     );
