@@ -4,25 +4,18 @@ import './Config.css';
 import { HighlightedMarkdown } from './Common';
 
 const BUILTIN_IMGS = {
-  'https://cdn.jsdelivr.net/gh/thuhole/webhole@gh-pages/static/bg/gbp.jpg':
-    '寻觅繁星（默认）',
-  'https://cdn.jsdelivr.net/gh/thuhole/webhole@gh-pages/static/bg/eriri.jpg':
-    '平成著名画师',
-  'https://cdn.jsdelivr.net/gh/thuhole/webhole@gh-pages/static/bg/yurucamp.jpg':
-    '露营天下第一',
-  'https://cdn.jsdelivr.net/gh/thuhole/webhole@gh-pages/static/bg/minecraft.jpg':
-    '麦恩·库拉夫特',
-  'https://cdn.jsdelivr.net/gh/thuhole/webhole@gh-pages/static/bg/cyberpunk.jpg':
-    '赛博城市',
-  'https://cdn.jsdelivr.net/gh/thuhole/webhole@gh-pages/static/bg/bj.jpg':
-    '城市的星光',
-  'https://cdn.jsdelivr.net/gh/thuhole/webhole@gh-pages/static/bg/sif.jpg':
-    '梦开始的地方',
+  'https://static.r-ay.cn/shuhole-background/weichangshuguan.jpg':
+    '伟长书馆（默认）',
+  'https://static.r-ay.cn/shuhole-background/gucunzaoyin.jpg': '顾村早樱',
+  'https://static.r-ay.cn/shuhole-background/jixilongxu.jpg': '绩溪龙须',
+  'https://static.r-ay.cn/shuhole-background/yugechangwan.jpg': '渔歌唱晚',
+  'https://static.r-ay.cn/shuhole-background/suibianpaipai.jpg': '随便拍拍',
+  'https://static.r-ay.cn/shuhole-background/baoshanshuguan.jpg': '宝山书馆',
 };
 
 const DEFAULT_CONFIG = {
   background_img:
-    'https://cdn.jsdelivr.net/gh/thuhole/webhole@gh-pages/static/bg/gbp.jpg',
+    'https://static.r-ay.cn/shuhole-background/weichangshuguan.jpg',
   background_color: '#113366',
   pressure: false,
   easter_egg: true,
