@@ -1791,7 +1791,7 @@ export class Flow extends PureComponent {
           .then((json) => {
             this.setState({
               chunks: {
-                title: 'PID = ' + pid,
+                title: '鼠洞 #' + pid,
                 data: [json.post],
               },
               mode: 'single_finished',
