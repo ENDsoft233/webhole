@@ -110,10 +110,12 @@ export function InfoSidebar(props) {
         <p>通过公众号「鼠洞 SHUer」可与我们取得联系</p>
       </div>
       <div className="box help-desc-box">
-        <small>
-          <strong>客户端版本</strong> {process.env.REACT_APP_BUILD_INFO}{' '}
-          <a onClick={DoUpdate}>强制检查更新</a>
-        </small>
+        <p>
+          <small>
+            <strong>客户端版本</strong> {process.env.REACT_APP_BUILD_INFO}{' '}
+            <a onClick={DoUpdate}>强制检查更新</a>
+          </small>
+        </p>
         <p>酷悦鼠洞由上海酷悦科技有限公司运营维护。</p>
         <p>
           鼠洞的诞生离不开&nbsp;
@@ -124,38 +126,9 @@ export function InfoSidebar(props) {
           <a href="#https://github.com/pkuhelper-web/webhole" rel="noopener">
             P大鼠洞
           </a>
-          、
-          <a href="#https://reactjs.org/" rel="noopener">
-            React
-          </a>
-          、
-          <a href="#https://icomoon.io/#icons" rel="noopener">
-            IcoMoon
-          </a>
-          &nbsp;等开源项目
-        </p>
-        <p>
-          本项目也基于&nbsp;
+          &nbsp;等开源项目， 本项目也基于&nbsp;
           <a href="#https://www.gnu.org/licenses/gpl-3.0.zh-cn.html">GPLv3</a>
-          &nbsp;协议在 <a href={process.env.REACT_APP_GITHUB_WEB_URL}>
-            GitHub
-          </a>{' '}
-          开源
-        </p>
-        <p>
-          This program is free software: you can redistribute it and/or modify
-          it under the terms of the GNU General Public License as published by
-          the Free Software Foundation, either version 3 of the License, or (at
-          your option) any later version.
-        </p>
-        <p>
-          This program is distributed in the hope that it will be useful, but
-          WITHOUT ANY WARRANTY; without even the implied warranty of
-          MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the&nbsp;
-          <a href="#https://www.gnu.org/licenses/gpl-3.0.zh-cn.html">
-            GNU General Public License
-          </a>
-          &nbsp;for more details.
+          &nbsp;协议开源
         </p>
       </div>
     </div>
