@@ -604,12 +604,16 @@ export class PostForm extends Component {
         }
       >
         <div className="post-form-bar">
-          <label>
-            {/*<a>上传图片</a>*/}
-            <span className={'post-upload'}>
-              <span className="icon icon-image" />
-              &nbsp;插入图片
-            </span>
+          {/*<a>上传图片</a>*/}
+          <button
+            type="button"
+            onClick={() => {
+              this.img_ref.current.click();
+            }}
+            className={'post-upload'}
+          >
+            <span className="icon icon-image" />
+            &nbsp;插入图片
             <input
               ref={this.img_ref}
               type="file"
@@ -617,7 +621,7 @@ export class PostForm extends Component {
               disabled={this.state.loading_status !== 'done'}
               onChange={this.on_img_change_bound}
             />
-          </label>
+          </button>
           {/* 发起投票，不可在评论区发送投票*/}
           {this.props.action === 'dopost' ? (
             !vote ? (
@@ -665,6 +669,7 @@ export class PostForm extends Component {
               &nbsp;预览
             </button>
           )}
+          <div style={{ flex: 1 }} />
           {this.state.loading_status !== 'done' ? (
             <button disabled="disabled">
               <span className="icon icon-loading" />
@@ -722,25 +727,29 @@ export class PostForm extends Component {
           />
         )}
         {this.props.action === 'dopost' && (
-          <div>
-            <small>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <small style={{ flex: 1 }}>
               发帖前请阅读并同意
               <a href={process.env.REACT_APP_RULES_URL}>鼠洞规范</a>
               &nbsp;
-              <span style={{ float: 'right' }}>
-                <select
-                  className="selectCss"
-                  onChange={(e) => this.setState({ tag: e.target.value })}
-                >
-                  <option className="selectOption">可选标签</option>
-                  {tagsArrayAfter.map((tag, i) => (
-                    <option className="selectOption" key={i} value={tag}>
-                      #{tag}
-                    </option>
-                  ))}
-                </select>
-              </span>
             </small>
+            <select
+              className="selectCss"
+              onChange={(e) => this.setState({ tag: e.target.value })}
+            >
+              <option className="selectOption">适合所有人</option>
+              {tagsArrayAfter.map((tag, i) => (
+                <option className="selectOption" key={i} value={tag}>
+                  #{tag}
+                </option>
+              ))}
+            </select>
           </div>
         )}
       </form>

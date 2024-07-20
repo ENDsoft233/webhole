@@ -234,7 +234,7 @@ a.app-switcher-item, .app-switcher-item a {
 .treehollow-login-popup input:not([type="checkbox"]) {
     width: 8rem;
     border-radius: 5px;
-    border: 1px solid black;
+    border: 1px solid #999;
     outline: none;
     margin: 0;
     padding: 0 .5em;
@@ -246,7 +246,7 @@ a.app-switcher-item, .app-switcher-item a {
     background-color: rgba(235,235,235,.5);
     border-radius: 5px;
     text-align: center;
-    border: 1px solid black;
+    border: 1px solid #999;
     line-height: 2em;
     margin: 0 .5rem;
 }
