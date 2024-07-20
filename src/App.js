@@ -204,6 +204,28 @@ class App extends Component {
         console.log('received message from charging', e.data);
       }
     });
+
+    window.addEventListener(
+      'popstate',
+      (e) => {
+        if (this.state.sidebar_stack.length > 1) {
+          this.show_sidebar(null, null, 'pop');
+        } else {
+          if (window.chargingSource) {
+            window.chargingSource.postMessage(
+              {
+                type: 'close',
+              },
+              'https://charging.shuhole.cn',
+            );
+          } else {
+            window.close();
+          }
+        }
+        e.preventDefault();
+      },
+      { passive: false },
+    );
   }
 
   static is_darkmode() {
