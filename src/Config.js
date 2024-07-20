@@ -349,11 +349,11 @@ export class ConfigUI extends PureComponent {
   }
 
   reset_settings() {
-    if (window.confirm('重置所有设置？')) {
+    window.toastConfirm('重置所有设置？').then(() => {
       window.config = {};
       save_config();
       window.location.reload();
-    }
+    });
   }
 
   render() {

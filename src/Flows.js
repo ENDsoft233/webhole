@@ -290,16 +290,12 @@ function ReportWidget(props) {
     let item_type_str = { post: '鼠洞', comment: '评论' }[item_type];
 
     let reason;
+    let confirmText;
     switch (report_type) {
       case 'fold':
         reason = fold_reason;
         if (reason === 'select') return;
-        if (
-          !window.confirm(
-            `确认要因为 ${reason} 要求折叠 ${item_type_str} #${id} 吗？`,
-          )
-        )
-          return;
+        confirmText = `确认要因为 ${reason} 要求折叠 ${item_type_str} #${id} 吗？`;
         break;
       case 'set_tag':
         reason = tag_text;
@@ -308,10 +304,7 @@ function ReportWidget(props) {
           reason = window.prompt(item_type_str + ' #' + id + ' 的tag：');
           if (!reason) return;
         }
-        if (
-          !window.confirm(`确认设置${item_type_str} #${id}的tag=${reason}吗？`)
-        )
-          return;
+        confirmText = `确认设置${item_type_str} #${id}的tag=${reason}吗？`;
         break;
       case 'report':
       default:
@@ -319,28 +312,25 @@ function ReportWidget(props) {
           `${report_type_str}` + item_type_str + ' #' + id + ' 的理由：',
         );
         if (!reason) return;
-        if (
-          !window.confirm(
-            `确认因为理由 ${reason} ${report_type_str} ${item_type_str} #${id} 吗？`,
-          )
-        )
-          return;
+        confirmText = `确认因为理由 ${reason} ${report_type_str} ${item_type_str} #${id} 吗？`;
         break;
     }
 
-    let token = localStorage['TOKEN'];
-    API.report(item_type, id, report_type, reason, token)
-      .then((json) => {
-        alert(`${report_type_str}成功`, {
-          color: 'success',
+    window.toastConfirm(confirmText).then(() => {
+      let token = localStorage['TOKEN'];
+      API.report(item_type, id, report_type, reason, token)
+        .then((json) => {
+          alert(`${report_type_str}成功`, {
+            color: 'success',
+          });
+        })
+        .catch((e) => {
+          alert('举报失败：' + e, {
+            color: 'warning',
+          });
+          console.error(e);
         });
-      })
-      .catch((e) => {
-        alert('举报失败：' + e, {
-          color: 'warning',
-        });
-        console.error(e);
-      });
+    });
   }
 
   return (

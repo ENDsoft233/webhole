@@ -247,6 +247,36 @@ class App extends Component {
         );
       else window.originalAlert(msg);
     };
+
+    window.toastConfirm = (msg, config) => {
+      return new Promise((resolve, reject) => {
+        if (window.chargingSource) {
+          window.chargingSource.postMessage(
+            {
+              type: 'confirm',
+              message: {
+                message: msg,
+                color: 'info',
+                persist: true,
+                ...config,
+              },
+            },
+            'https://charging.shuhole.cn',
+          );
+          window.addEventListener('message', (e) => {
+            if (e.origin === 'https://charging.shuhole.cn') {
+              if (e.data.type === 'confirm') {
+                if (e.data.result) resolve();
+                else reject();
+              }
+            }
+          });
+        } else {
+          if (window.confirm(msg)) resolve();
+          else reject();
+        }
+      });
+    };
   }
 
   static is_darkmode() {
