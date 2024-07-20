@@ -102,6 +102,10 @@ class App extends Component {
         .then(get_json)
         .then((json) => {
           if (json.code !== 0) {
+            localStorage.removeItem('TOKEN');
+            this.setState({
+              token: null,
+            });
             if (!codeMode) {
               const body = new URLSearchParams();
               Object.entries({
