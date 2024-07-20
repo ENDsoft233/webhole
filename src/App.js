@@ -244,6 +244,12 @@ class App extends Component {
           },
           'https://charging.shuhole.cn',
         );
+      else
+        wx.miniProgram.postMessage({
+          data: {
+            type: 'shuhole-index',
+          },
+        });
     } else {
       const thread_id = title.split('#')[1];
       wx.updateTimelineShareData({
@@ -268,6 +274,14 @@ class App extends Component {
           },
           'https://charging.shuhole.cn',
         );
+      else
+        wx.miniProgram.postMessage({
+          data: {
+            type: 'shuhole-thread',
+            id: thread_id,
+            info,
+          },
+        });
     }
     this.setState((prevState) => {
       let ns = prevState.sidebar_stack.slice();
