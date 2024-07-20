@@ -230,6 +230,23 @@ class App extends Component {
       },
       { passive: false },
     );
+
+    window.originalAlert = window.alert;
+    alert = (msg, config) => {
+      console.log('hooked alert', msg);
+      if (window.chargingSource)
+        window.chargingSource.postMessage(
+          {
+            type: 'toast',
+            message: {
+              message: msg,
+              ...config,
+            },
+          },
+          'https://charging.shuhole.cn',
+        );
+      else window.originalAlert(msg);
+    };
   }
 
   static is_darkmode() {
