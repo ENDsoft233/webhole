@@ -58,6 +58,9 @@ class ControlBar extends PureComponent {
                 '=' +
                 flag_res[2] +
                 '\nYou may need to refresh this webpage.',
+              {
+                color: 'info',
+              },
             );
           } else {
             delete localStorage[flag_res[1]];
@@ -65,6 +68,9 @@ class ControlBar extends PureComponent {
               'Clear Flag ' +
                 flag_res[1] +
                 '\nYou may need to refresh this webpage.',
+              {
+                color: 'info',
+              },
             );
           }
         }

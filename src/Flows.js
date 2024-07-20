@@ -331,10 +331,14 @@ function ReportWidget(props) {
     let token = localStorage['TOKEN'];
     API.report(item_type, id, report_type, reason, token)
       .then((json) => {
-        alert(`${report_type_str}成功`);
+        alert(`${report_type_str}成功`, {
+          color: 'success',
+        });
       })
       .catch((e) => {
-        alert('举报失败：' + e);
+        alert('举报失败：' + e, {
+          color: 'warning',
+        });
         console.error(e);
       });
   }
@@ -487,7 +491,10 @@ class VoteShowBox extends PureComponent {
       .then(get_json)
       .then((json) => {
         if (json.code !== 0) {
-          if (json.msg) alert(json.msg);
+          if (json.msg)
+            alert(json.msg, {
+              color: 'error',
+            });
           throw new Error(JSON.stringify(json));
         }
         // 投完票后从json中获取票数
@@ -521,7 +528,9 @@ class VoteShowBox extends PureComponent {
       })
       .catch((e) => {
         console.error(e);
-        alert('投票失败');
+        alert('投票失败', {
+          color: 'warning',
+        });
         this.setState({
           alreadyVote: false,
           loading: false,
@@ -529,8 +538,13 @@ class VoteShowBox extends PureComponent {
       });
   }
   render() {
-    const { alreadyVote, eachNums, yourVoteIndex, totalCount, loading } =
-      this.state;
+    const {
+      alreadyVote,
+      eachNums,
+      yourVoteIndex,
+      totalCount,
+      loading,
+    } = this.state;
     let { vote_data } = this.state;
     if (vote_data == 0) {
       vote_data = this.props.voteOptions.vote_data;
@@ -878,7 +892,9 @@ class FlowSidebar extends PureComponent {
           loading_status: 'done',
         });
         window.stopRefresh();
-        alert('设置关注失败');
+        alert('设置关注失败', {
+          color: 'warning',
+        });
         console.error(e);
       });
   }
@@ -1693,8 +1709,9 @@ export class Flow extends PureComponent {
                   .split('.');
                 console.log('remote version:', versions_remote);
                 if (process.env.REACT_APP_BUILD_INFO) {
-                  let versions_local =
-                    process.env.REACT_APP_BUILD_INFO.substring(1).split('.');
+                  let versions_local = process.env.REACT_APP_BUILD_INFO.substring(
+                    1,
+                  ).split('.');
                   if (versions_remote.length >= 3) {
                     if (
                       versions_remote[0] > versions_local[0] ||

@@ -43,7 +43,9 @@ export class AudioWidget extends Component {
         reader.onload = (event) => {
           const raw = new window.AMR().decode(event.target.result);
           if (!raw) {
-            alert('audio decoding failed');
+            alert('音频解码失败', {
+              color: 'warning',
+            });
             return;
           }
           const wave = window.PCMData.encode({

@@ -70,18 +70,24 @@ class LoginPopupSelf extends Component {
       !this.ref.checkbox_terms.current.checked ||
       !this.ref.checkbox_account.current.checked
     ) {
-      alert('请同意条款与条件！');
+      alert('请同意条款与条件！', {
+        color: 'warning',
+      });
       return 1;
     }
     if (this.ref.password.current.value.length < 8) {
-      alert('密码太短，至少应包含8个字符！');
+      alert('密码太短，至少应包含8个字符！', {
+        color: 'warning',
+      });
       return 2;
     }
     if (
       this.ref.password.current.value !==
       this.ref.password_confirm.current.value
     ) {
-      alert('密码不一致！');
+      alert('密码不一致！', {
+        color: 'warning',
+      });
       return 3;
     }
     return 0;
@@ -141,7 +147,9 @@ class LoginPopupSelf extends Component {
             if (json.code === 3) failed_callback();
           })
           .catch((e) => {
-            alert('邮箱检验失败\n' + e);
+            alert('邮箱检验失败: ' + e, {
+              color: 'error',
+            });
             this.setState({
               loading_status: 'done',
             });
@@ -181,7 +189,9 @@ class LoginPopupSelf extends Component {
             }
 
             set_token(json.token);
-            alert('登录成功');
+            alert('登录成功', {
+              color: 'success',
+            });
             this.setState({
               loading_status: 'done',
             });
@@ -189,7 +199,9 @@ class LoginPopupSelf extends Component {
           })
           .catch((e) => {
             console.error(e);
-            alert('登录失败\n' + e);
+            alert('登录失败: ' + e, {
+              color: 'error',
+            });
             this.setState({
               loading_status: 'done',
             });
@@ -230,7 +242,9 @@ class LoginPopupSelf extends Component {
             }
 
             set_token(json.token);
-            alert('登录成功');
+            alert('登录成功', {
+              color: 'success',
+            });
             this.setState({
               loading_status: 'done',
             });
@@ -238,7 +252,9 @@ class LoginPopupSelf extends Component {
           })
           .catch((e) => {
             console.error(e);
-            alert('登录失败\n' + e);
+            alert('登录失败: ' + e, {
+              color: 'error',
+            });
             this.setState({
               loading_status: 'done',
             });
@@ -279,7 +295,9 @@ class LoginPopupSelf extends Component {
             }
 
             set_token(json.token);
-            alert('登录成功');
+            alert('登录成功', {
+              color: 'success',
+            });
             this.setState({
               loading_status: 'done',
             });
@@ -287,7 +305,9 @@ class LoginPopupSelf extends Component {
           })
           .catch((e) => {
             console.error(e);
-            alert('登录失败\n' + e);
+            alert('登录失败: ' + e, {
+              color: 'warning',
+            });
             this.setState({
               loading_status: 'done',
             });
@@ -440,7 +460,9 @@ class LoginPopupSelf extends Component {
                 <RecaptchaV2Popup
                   callback={() => {
                     this.verify_email('v2', () => {
-                      alert('reCAPTCHA风控系统校验失败');
+                      alert('您的操作被风险控制系统拦截', {
+                        color: 'warning',
+                      });
                     });
                   }}
                 >

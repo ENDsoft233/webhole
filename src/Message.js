@@ -38,7 +38,9 @@ export class MessageViewer extends PureComponent {
           })
           .catch((err) => {
             console.error(err);
-            alert('' + err);
+            alert('获取系统信息失败: ' + err, {
+              color: 'error',
+            });
             this.setState({
               loading_status: 'failed',
             });

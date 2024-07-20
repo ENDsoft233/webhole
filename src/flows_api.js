@@ -30,7 +30,10 @@ const handle_response = async (response, notify = false, add_v = true) => {
   let json = await get_json(response);
   if (json.code !== 0) {
     if (json.msg) {
-      if (notify) alert(json.msg);
+      if (notify)
+        alert(json.msg, {
+          color: 'info',
+        });
       else throw new Error(json.msg);
     } else throw new Error(JSON.stringify(json));
   }

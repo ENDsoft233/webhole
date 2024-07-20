@@ -41,7 +41,9 @@ class UnregisterPopupSelf extends Component {
 
   valid_registration() {
     if (!this.ref.checkbox_account.current.checked) {
-      alert('请同意条款与条件！');
+      alert('请同意条款与条件！', {
+        color: 'warning',
+      });
       return 1;
     }
     return 0;
@@ -99,7 +101,9 @@ class UnregisterPopupSelf extends Component {
             if (json.code === 3) failed_callback();
           })
           .catch((e) => {
-            alert('邮箱检验失败\n' + e);
+            alert('邮箱检验失败: ' + e, {
+              color: 'error',
+            });
             this.setState({
               loading_status: 'done',
             });
@@ -136,7 +140,9 @@ class UnregisterPopupSelf extends Component {
               throw new Error(JSON.stringify(json));
             }
 
-            alert('注销账户成功');
+            alert('注销账户成功', {
+              color: 'success',
+            });
             this.setState({
               loading_status: 'done',
             });
@@ -144,7 +150,9 @@ class UnregisterPopupSelf extends Component {
           })
           .catch((e) => {
             console.error(e);
-            alert('失败\n' + e);
+            alert('注销账户失败: ' + e, {
+              color: 'error',
+            });
             this.setState({
               loading_status: 'done',
             });
@@ -232,7 +240,9 @@ class UnregisterPopupSelf extends Component {
                 <RecaptchaV2Popup
                   callback={() => {
                     this.verify_email('v2', () => {
-                      alert('reCAPTCHA风控系统校验失败');
+                      alert('您的操作被风险控制系统拦截，请稍后再试', {
+                        color: 'warning',
+                      });
                     });
                   }}
                 >

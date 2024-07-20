@@ -177,7 +177,9 @@ export class LoginForm extends Component {
                             })
                             .catch((err) => {
                               console.error(err);
-                              alert('' + err);
+                              alert('无法登出: ' + err, {
+                                color: 'error',
+                              });
                               token.set_value(null);
                             });
                         }}
@@ -399,7 +401,10 @@ export class PostForm extends Component {
       .then(get_json)
       .then((json) => {
         if (json.code !== 0) {
-          if (json.msg) alert(json.msg);
+          if (json.msg)
+            alert(json.msg, {
+              color: 'error',
+            });
           throw new Error(JSON.stringify(json));
         }
         this.setState({
@@ -412,7 +417,9 @@ export class PostForm extends Component {
       })
       .catch((e) => {
         console.error(e);
-        alert('发表失败');
+        alert('发表失败', {
+          color: 'warning',
+        });
         this.setState({
           loading_status: 'done',
         });
@@ -549,7 +556,9 @@ export class PostForm extends Component {
           this.do_post(this.state.text, d.img);
         })
         .catch((e) => {
-          alert(e);
+          alert(e, {
+            color: 'error',
+          });
         });
     } else {
       this.setState({
@@ -568,7 +577,9 @@ export class PostForm extends Component {
   addVote() {
     let { voteOptionNum } = this.state;
     if (voteOptionNum >= 4) {
-      alert('最大支持 4 个选项');
+      alert('最大支持 4 个选项', {
+        color: 'warning',
+      });
     } else if (voteOptionNum == 0) {
       voteOptionNum = 2;
     } else {
@@ -580,7 +591,9 @@ export class PostForm extends Component {
   removeVote() {
     let { voteOptionNum } = this.state;
     if (voteOptionNum <= 2) {
-      alert('最小支持 2 个选项');
+      alert('最小支持 2 个选项', {
+        color: 'warning',
+      });
     } else if (voteOptionNum == 0) {
       voteOptionNum = 2;
     } else {

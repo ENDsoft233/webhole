@@ -30,7 +30,9 @@ export function load_config() {
   try {
     loaded_config = JSON.parse(localStorage['hole_config'] || '{}');
   } catch (e) {
-    alert('设置加载失败，将重置为默认设置！\n' + e);
+    alert('设置加载失败，将重置为默认设置 (' + e + ')', {
+      color: 'warning',
+    });
     delete localStorage['hole_config'];
     loaded_config = {};
   }
@@ -434,7 +436,9 @@ export class ConfigUI extends PureComponent {
                 <a
                   onClick={() => {
                     delete localStorage['hide_announcement'];
-                    alert('已取消隐藏公告');
+                    alert('已取消隐藏公告', {
+                      color: 'success',
+                    });
                   }}
                 >
                   [取消隐藏]
