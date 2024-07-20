@@ -867,7 +867,13 @@ class FlowSidebar extends PureComponent {
             ),
           };
         else json.data.variant = {};
-
+        if (window.chargingSource)
+          window.chargingSource.postMessage(
+            {
+              type: 'subscribe',
+            },
+            'https://charging.shuhole.cn',
+          );
         this.setState({
           loading_status: 'done',
           info: json.data,

@@ -407,6 +407,13 @@ export class PostForm extends Component {
             });
           throw new Error(JSON.stringify(json));
         }
+        if (window.chargingSource)
+          window.chargingSource.postMessage(
+            {
+              type: 'subscribe',
+            },
+            'https://charging.shuhole.cn',
+          );
         this.setState({
           loading_status: 'done',
           text: '',
