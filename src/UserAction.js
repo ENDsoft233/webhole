@@ -303,7 +303,12 @@ export class VoteEditBox extends Component {
         <input
           key={i}
           maxLength="15"
-          style={{ padding: '0 2px', margin: '2px 2px' }}
+          style={{
+            padding: '0 2px',
+            margin: '2px 2px',
+            minWidth: 'calc(50% - 4px)',
+            flex: 1,
+          }}
           onChange={(event) => {
             this.onChangeCheckAndSend(i + 1)(event.target.value);
           }}
@@ -312,10 +317,18 @@ export class VoteEditBox extends Component {
       );
     }
     return (
-      <div>
-        <hr />
-        <p>设置2~4个选项，每项不超过15字符</p>
-        {inputPile}
+      <div
+        style={{
+          margin: '0 0 8px',
+          border: '1px solid #999',
+          borderRadius: '5px',
+          padding: '4px',
+        }}
+      >
+        <div>
+          <small>设置 {this.props.num} 个选项，每项不超过 15 字符</small>
+        </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap' }}>{inputPile}</div>
       </div>
     );
   }
@@ -582,11 +595,23 @@ export class PostForm extends Component {
   addVote() {
     let { voteOptionNum } = this.state;
     if (voteOptionNum >= 4) {
-      alert('最大支持4个选项');
+      alert('最大支持 4 个选项');
     } else if (voteOptionNum == 0) {
       voteOptionNum = 2;
     } else {
       voteOptionNum++;
+    }
+    this.setState({ voteOptionNum });
+  }
+
+  removeVote() {
+    let { voteOptionNum } = this.state;
+    if (voteOptionNum <= 2) {
+      alert('最小支持 2 个选项');
+    } else if (voteOptionNum == 0) {
+      voteOptionNum = 2;
+    } else {
+      voteOptionNum--;
     }
     this.setState({ voteOptionNum });
   }
@@ -638,11 +663,15 @@ export class PostForm extends Component {
               <button
                 type="button"
                 onClick={() => {
-                  this.addVote();
+                  this.setState({
+                    vote: false,
+                    voteOptionNum: 0,
+                    voteData: {},
+                  });
                 }}
               >
                 <span className="icon icon-how_to_vote" />
-                &nbsp;添加
+                &nbsp;取消
               </button>
             )
           ) : (
@@ -695,6 +724,33 @@ export class PostForm extends Component {
             </a>
             {this.state.img_tip}
           </p>
+        )}
+        {vote && (
+          <React.Fragment>
+            <button
+              type="button"
+              disabled={this.state.voteOptionNum >= 4}
+              onClick={() => {
+                this.addVote();
+              }}
+              style={{
+                margin: '0 0 10px 0',
+              }}
+            >
+              <span className="icon icon-how_to_vote" />
+              &nbsp;增加选项
+            </button>
+            <button
+              type="button"
+              disabled={this.state.voteOptionNum <= 2}
+              onClick={() => {
+                this.removeVote();
+              }}
+            >
+              <span className="icon icon-how_to_vote" />
+              &nbsp;减少选项
+            </button>
+          </React.Fragment>
         )}
         {this.state.preview ? (
           <div
