@@ -256,7 +256,7 @@ export class SafeTextarea extends Component {
   componentDidMount() {
     this.setState(
       {
-        text: window.TEXTAREA_BACKUP[this.props.id] || '',
+        text: sessionStorage.getItem(`TEXTAREA_BACKUP_${this.props.id}`) || '',
       },
       () => {
         this.change_callback(this.state.text);
@@ -265,7 +265,7 @@ export class SafeTextarea extends Component {
   }
 
   componentWillUnmount() {
-    window.TEXTAREA_BACKUP[this.props.id] = this.state.text;
+    sessionStorage.setItem(`TEXTAREA_BACKUP_${this.props.id}`, this.state.text);
     this.change_callback(this.state.text);
   }
 
@@ -307,6 +307,7 @@ export class SafeTextarea extends Component {
         onChange={this.on_change_bound}
         value={this.state.text}
         onKeyDown={this.on_keydown_bound}
+        style={{ fontSize: '16px', padding: '8px' }}
       />
     );
   }

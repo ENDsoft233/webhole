@@ -59,13 +59,13 @@
 }
 
 .post-form-bar button {
-  flex: 0 0 6em;
+  flex: 0 0 auto;
   margin-right: 0;
 }
 
 @media screen and (max-width: 580px) {
   .post-form-bar button {
-    flex: 0 0 4.5em;
+    flex: 0 0 auto;
     margin-right: 0;
   }
 }
@@ -100,7 +100,6 @@ input[type='file'] {
   text-align: center;
   border: 1px solid #999;
   line-height: 2em;
-  flex-basis: 7em !important;
   margin-left: 0;
 }
 
