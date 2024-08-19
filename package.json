@@ -21,6 +21,7 @@
     "react-google-recaptcha-v3": "^1.7.0",
     "react-imageslides": "^2.1.1",
     "react-scripts": "^3.4.4",
+    "react-textarea-autosize": "^8.5.3",
     "react-timeago": "^4.4.0",
     "react-transition-group": "^4.4.1",
     "tencentcloud-sdk-nodejs": "^4.0.898",

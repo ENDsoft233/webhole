@@ -3,6 +3,8 @@ import { format_time, Time, TitleLine } from './old_infrastructure/widgets';
 
 import HtmlToReact from 'html-to-react';
 
+import TextareaAutosize from 'react-textarea-autosize';
+
 import './Common.css';
 import {
   // URL_PID_RE,
@@ -302,12 +304,14 @@ export class SafeTextarea extends Component {
 
   render() {
     return (
-      <textarea
+      <TextareaAutosize
         ref={this.area_ref}
         onChange={this.on_change_bound}
         value={this.state.text}
         onKeyDown={this.on_keydown_bound}
         style={{ fontSize: '16px', padding: '8px' }}
+        minRows={3}
+        maxRows={20}
       />
     );
   }
